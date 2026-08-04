@@ -1,0 +1,77 @@
+# =========================
+# General
+# =========================
+.DS_Store
+Thumbs.db
+
+# OS / IDE
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Secrets / env
+.env
+.env.*
+*.env
+
+# Logs / outputs
+*.log
+logs/
+log/
+outputs/
+output/
+results/
+runs/
+lightning_logs/
+tensorboard/
+tb_logs/
+
+# Weights / checkpoints (do not commit large model artifacts)
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+
+# Numpy arrays used for GT/eval dumps (often large)
+**/gt*.npy
+**/gt*.npz
+
+# HuggingFace / caches (optional)
+.cache/
+**/.cache/
+
+# =========================
+# Repo-specific heavy artifacts
+# =========================
+
+# UCF data: annotations + pre-extracted features
+UCF Annotation/
+UCFClipFeatures/
+
+# UCF checkpoint diagnostics dumps
+ucf_checkpoint_diagnostics*/
+
+# Top-level weight file observed in this repo
+model_ucf.pth
+
+# Generated caches / embeddings / caption dumps inside notebooks folder
+code/*embeddings_cache*.json
+code/*prototype_embeddings_cache*.json
+code/*gpt_video_descriptions*.json
+code/*gpt_video_descriptions*.csv
+
+# (If you generate additional cached JSON/embeddings later, add patterns here.)

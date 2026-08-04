@@ -1,0 +1,979 @@
+{
+  "metadata": {
+    "source": "GPT video descriptions from UCA timestamp annotations",
+    "selection_mode": "vadclip_train_list",
+    "splits_used": [
+      "train"
+    ],
+    "train_list_csv": "D:\\Finetune VadCLIP\\VadCLIP\\list\\ucf_CLIP_rgb_description.csv",
+    "embedding_model": "text-embedding-3-small",
+    "generation_model": "gpt-5.6-luna",
+    "final_prototypes_per_class": 5,
+    "candidates_per_cluster": 3,
+    "max_descriptions_per_cluster_prompt": 35,
+    "dry_run": false
+  },
+  "class_counts": {
+    "Abuse": 48,
+    "Arrest": 44,
+    "Arson": 41,
+    "Assault": 45,
+    "Burglary": 87,
+    "Explosion": 29,
+    "Fighting": 45,
+    "Normal": 763,
+    "RoadAccidents": 125,
+    "Robbery": 143,
+    "Shooting": 27,
+    "Shoplifting": 29,
+    "Stealing": 95,
+    "Vandalism": 44
+  },
+  "train_list_class_counts": {
+    "Abuse": 48,
+    "Arrest": 44,
+    "Arson": 41,
+    "Assault": 45,
+    "Burglary": 87,
+    "Explosion": 29,
+    "Fighting": 45,
+    "Normal": 763,
+    "RoadAccidents": 125,
+    "Robbery": 143,
+    "Shooting": 27,
+    "Shoplifting": 29,
+    "Stealing": 95,
+    "Vandalism": 44
+  },
+  "missing_description_video_ids": [],
+  "skipped_records": [],
+  "candidate_generation_report": [
+    {
+      "class_name": "Abuse",
+      "cluster_id": 0,
+      "cluster_size": 36,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Abuse",
+      "cluster_id": 1,
+      "cluster_size": 12,
+      "selected_descriptions": 12,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "empty"
+          },
+          {
+            "attempt": 2,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Arrest",
+      "cluster_id": 0,
+      "cluster_size": 12,
+      "selected_descriptions": 12,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Arrest",
+      "cluster_id": 1,
+      "cluster_size": 32,
+      "selected_descriptions": 32,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Arson",
+      "cluster_id": 0,
+      "cluster_size": 16,
+      "selected_descriptions": 16,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Arson",
+      "cluster_id": 1,
+      "cluster_size": 25,
+      "selected_descriptions": 25,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Assault",
+      "cluster_id": 0,
+      "cluster_size": 37,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Assault",
+      "cluster_id": 1,
+      "cluster_size": 8,
+      "selected_descriptions": 8,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Burglary",
+      "cluster_id": 0,
+      "cluster_size": 15,
+      "selected_descriptions": 15,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Burglary",
+      "cluster_id": 1,
+      "cluster_size": 49,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Burglary",
+      "cluster_id": 2,
+      "cluster_size": 23,
+      "selected_descriptions": 23,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Explosion",
+      "cluster_id": 0,
+      "cluster_size": 5,
+      "selected_descriptions": 5,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Explosion",
+      "cluster_id": 1,
+      "cluster_size": 24,
+      "selected_descriptions": 24,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Fighting",
+      "cluster_id": 0,
+      "cluster_size": 11,
+      "selected_descriptions": 11,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Fighting",
+      "cluster_id": 1,
+      "cluster_size": 34,
+      "selected_descriptions": 34,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 0,
+      "cluster_size": 64,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 1,
+      "cluster_size": 85,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 2,
+      "cluster_size": 38,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 3,
+      "cluster_size": 65,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 4,
+      "cluster_size": 87,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 5,
+      "cluster_size": 49,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 6,
+      "cluster_size": 40,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 7,
+      "cluster_size": 90,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 8,
+      "cluster_size": 60,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 9,
+      "cluster_size": 65,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 10,
+      "cluster_size": 62,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "cluster_id": 11,
+      "cluster_size": 58,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "RoadAccidents",
+      "cluster_id": 0,
+      "cluster_size": 34,
+      "selected_descriptions": 34,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "RoadAccidents",
+      "cluster_id": 1,
+      "cluster_size": 36,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "RoadAccidents",
+      "cluster_id": 2,
+      "cluster_size": 4,
+      "selected_descriptions": 4,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "RoadAccidents",
+      "cluster_id": 3,
+      "cluster_size": 51,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Robbery",
+      "cluster_id": 0,
+      "cluster_size": 14,
+      "selected_descriptions": 14,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Robbery",
+      "cluster_id": 1,
+      "cluster_size": 13,
+      "selected_descriptions": 13,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Robbery",
+      "cluster_id": 2,
+      "cluster_size": 39,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Robbery",
+      "cluster_id": 3,
+      "cluster_size": 47,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Robbery",
+      "cluster_id": 4,
+      "cluster_size": 30,
+      "selected_descriptions": 30,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Shooting",
+      "cluster_id": 0,
+      "cluster_size": 21,
+      "selected_descriptions": 21,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Shooting",
+      "cluster_id": 1,
+      "cluster_size": 6,
+      "selected_descriptions": 6,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Shoplifting",
+      "cluster_id": 0,
+      "cluster_size": 27,
+      "selected_descriptions": 27,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Shoplifting",
+      "cluster_id": 1,
+      "cluster_size": 2,
+      "selected_descriptions": 2,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Stealing",
+      "cluster_id": 0,
+      "cluster_size": 21,
+      "selected_descriptions": 21,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Stealing",
+      "cluster_id": 1,
+      "cluster_size": 20,
+      "selected_descriptions": 20,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Stealing",
+      "cluster_id": 2,
+      "cluster_size": 54,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Vandalism",
+      "cluster_id": 0,
+      "cluster_size": 3,
+      "selected_descriptions": 3,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "empty"
+          },
+          {
+            "attempt": 2,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Vandalism",
+      "cluster_id": 1,
+      "cluster_size": 41,
+      "selected_descriptions": 35,
+      "num_candidates": 3,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    }
+  ],
+  "final_generation_report": [
+    {
+      "class_name": "Abuse",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Arrest",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Arson",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Assault",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Burglary",
+      "num_candidates": 9,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Explosion",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Fighting",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Normal",
+      "num_candidates": 36,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "RoadAccidents",
+      "num_candidates": 12,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Robbery",
+      "num_candidates": 15,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Shooting",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Shoplifting",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Stealing",
+      "num_candidates": 9,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    },
+    {
+      "class_name": "Vandalism",
+      "num_candidates": 6,
+      "num_final_prototypes": 5,
+      "debug": {
+        "parse_status": "ok",
+        "attempts": [
+          {
+            "attempt": 1,
+            "parse_status": "ok"
+          }
+        ]
+      }
+    }
+  ],
+  "validation_errors": []
+}

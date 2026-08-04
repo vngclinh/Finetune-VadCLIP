@@ -1,0 +1,1085 @@
+{
+  "metadata": {
+    "source": "GPT video descriptions from UCA timestamp annotations",
+    "selection_mode": "vadclip_train_list",
+    "splits_used": [
+      "train"
+    ],
+    "train_list_csv": "D:\\Finetune VadCLIP\\VadCLIP\\list\\ucf_CLIP_rgb_description.csv",
+    "embedding_model": "text-embedding-3-small",
+    "generation_model": "gpt-5.6-luna",
+    "final_prototypes_per_class": 5,
+    "candidates_per_cluster": 3,
+    "max_descriptions_per_cluster_prompt": 35,
+    "dry_run": false
+  },
+  "classes": {
+    "Abuse": {
+      "num_descriptions": 48,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "Repeated intentional physical force-striking, kicking, grabbing, dragging, shaking, or restraining-directed at vulnerable people or animals during close-range encounters."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "A dominant actor controls another person or animal through hands, ropes, sticks, barriers, or forced repositioning, while the target resists, falls, cries, or struggles."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "Ordinary caregiving or handling escalates into repeated harsh contact, pauses briefly, then resumes as the target remains confined, displaced, or unable to withdraw."
+        },
+        {
+          "type": "scene_context",
+          "text": "Visual settings include homes, care areas, classrooms, yards, roadside spaces, and vehicles, with bystanders, furniture, gates, beds, or walls shaping movement."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinguish deliberate repeated force and pursuit from routine caregiving, playful contact, supervised restraint, consensual handling, or an isolated accidental collision."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "Caregivers or authority figures repeatedly strike, push, kick, shake, or restrain vulnerable people during routine care, while targets resist, cry, fall, or struggle to stand.",
+          "rationale": "Across many scenes, people responsible for care or control shift from assistance to repeated force, with vulnerable individuals showing resistance, distress, or difficulty remaining upright."
+        },
+        {
+          "cluster_id": 0,
+          "text": "A dominant person uses force against an older adult, child, or seated individual through grabbing, hair pulling, head pressing, dragging, or forced repositioning, often returning after brief pauses.",
+          "rationale": "Repeated patterns involve one person controlling another's body, interrupting movement, and resuming contact after pauses or short departures."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Routine feeding, dressing, bedding, wheelchair, or classroom assistance shifts into repeated blows, kicks, rough handling, and confinement near beds, walls, chairs, or floors.",
+          "rationale": "Ordinary caregiving or supervision frequently precedes escalating contact, with people held, moved, or kept near surrounding furniture and surfaces."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Adults repeatedly grab, strike, kick, chase, restrain, or pull domestic animals, sometimes using ropes or sticks and moving them through gates, walls, yards, or vehicles.",
+          "rationale": "Multiple scenes show people applying force to dogs or puppies and relocating them after prolonged handling."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Dogs, puppies, or children enter roadways and are hit or passed over by moving vehicles; traffic slows or continues while nearby people or animals respond afterward.",
+          "rationale": "Several scenes depict vulnerable beings in traffic lanes, vehicle contact, delayed stopping, and subsequent assistance or observation."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Adults use force during close physical encounters, including kicking, striking, pulling, handcuffing, or competing to carry a child, while nearby people intervene or gather.",
+          "rationale": "Repeated human interactions involve forceful contact, control of another person, and intervention by surrounding adults."
+        }
+      ]
+    },
+    "Arrest": {
+      "num_descriptions": 44,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "Uniformed officers pursue, stop, and physically control a person or vehicle occupant, applying restraints and escorting them toward a waiting official vehicle."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "Officers open vehicle doors, reach inside, search belongings or occupants, secure wrists, and transfer a controlled person between the roadside and a transport vehicle."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "A pursuit or confrontation develops into a stop, officer convergence, physical restraint, searching, and eventual escorted removal while nearby traffic or pedestrians continue moving."
+        },
+        {
+          "type": "scene_context",
+          "text": "Public roads, parking areas, building entrances, and indoor rooms show multiple uniformed officers coordinating around vehicles, occupants, doorways, and bystanders."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinct from routine traffic stops or coordinated crowd management, the defining pattern includes physical control, restraint application, and removal of a person."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "Police vehicles pursue a moving car or truck through roads and intersections; the vehicle makes abrupt turns, strikes another object or vehicle, and stops as additional units arrive.",
+          "rationale": "Repeated sequences show police pursuit, evasive driving, impact or forced stopping, followed by several police vehicles converging on the location."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Officers converge on a stopped vehicle, open or reach through doors, physically control a person, and move that person toward a police vehicle while others gather nearby.",
+          "rationale": "Multiple scenes depict officers removing, restraining, or escorting a person after surrounding a vehicle, with additional officers and bystanders present."
+        },
+        {
+          "cluster_id": 0,
+          "text": "After a vehicle-related disturbance, multiple police cars remain positioned around the scene while officers exit, approach occupants, and coordinate movement amid continuing pedestrian and traffic flow.",
+          "rationale": "Recurring aftermaths involve clustered police vehicles, officers approaching people or vehicles, and ordinary road users continuing around the intervention."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Officers confront a person, physically control them, apply hand restraints, and escort or carry them away, often after resistance and with bystanders or vehicles nearby.",
+          "rationale": "This sequence recurs across street scenes, rooms, businesses, and vehicle areas, with uniformed personnel progressively moving from confrontation to restraint and removal."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A person is pursued or stopped in public or near a doorway, pinned to the ground or wall by multiple uniformed officers, then searched and removed.",
+          "rationale": "Many descriptions show coordinated pursuit or interception followed by group restraint, inspection of belongings, and movement away from the original location."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Inside rooms or businesses, officers surround a resisting person, force them into seated or restrained positions, handle belongings, and later lead them outside.",
+          "rationale": "Indoor encounters repeatedly involve surrounding, pushing, holding, handcuffing, and collecting personal items before guided departure."
+        }
+      ]
+    },
+    "Arson": {
+      "num_descriptions": 41,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "A person deliberately applies an ignition source to fuel or combustible material on a vehicle, structure, furnishing, vegetation, or ground, then moves away as flames become established."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "An individual pours or spreads liquid fuel, places burning material, or throws a lit object onto accessible surfaces, creating direct contact between ignition and a targeted object."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "Following ignition, small flames develop into sustained burning, spreading across nearby surfaces and producing smoke; the initiator retreats, while others may approach with water or inspect the area."
+        },
+        {
+          "type": "scene_context",
+          "text": "The behavior occurs near parked vehicles, building entrances, rooms, walls, furnishings, vegetation, or open ground, with visible fuel placement and fire affecting stationary surroundings."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinguish from cooking, maintenance, ceremonial flames, or accidental brief ignition: this pattern shows deliberate fuel placement or thrown burning material followed by persistent, spreading fire."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "A person approaches a parked vehicle or fixed structure, pours a flammable liquid over it or nearby ground, ignites it, and departs while flames spread.",
+          "rationale": "Repeated sequences show deliberate liquid application followed by ignition and departure, with the targeted object or surrounding surface continuing to burn."
+        },
+        {
+          "cluster_id": 0,
+          "text": "A person initiates flames on vehicles, walls, rooms, vegetation, or open ground; burning continues after departure, often producing expanding flames, persistent smoke, or renewed ignition.",
+          "rationale": "Across settings, flames persist and propagate beyond the initial ignition point, sometimes fading before appearing again or filling the area with smoke."
+        },
+        {
+          "cluster_id": 0,
+          "text": "After ignition, nearby people, passing vehicles, or emergency responders may appear; water is applied and access points are inspected while smoke or residual flames persist.",
+          "rationale": "Several sequences continue with surrounding activity and later intervention, including water application, inspection, movement of vehicles, and lingering smoke."
+        },
+        {
+          "cluster_id": 1,
+          "text": "People repeatedly approach building entrances or rooms, distribute gasoline on floors, doors, walls, or furnishings, ignite it, and retreat while flames spread and continue burning.",
+          "rationale": "Multiple scenes show liquid being deliberately placed around structures or objects before ignition, followed by withdrawal and progressively larger visible flames."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Individuals throw burning torches or lit objects toward doors, rooms, vehicles, and nearby surfaces, then run away as smoke and sustained flames remain visible.",
+          "rationale": "Several sequences feature portable burning items used from a short distance, with repeated throws or placement followed by rapid departure and lingering fire."
+        },
+        {
+          "cluster_id": 1,
+          "text": "After ignition, people commonly leave by foot or vehicle, sometimes returning for another application, while fire grows across entrances, interiors, furniture, or vehicles.",
+          "rationale": "The descriptions repeatedly present staged visits, temporary departures, later returns, and continued burning across varied parts of the same property or object."
+        }
+      ]
+    },
+    "Assault": {
+      "num_descriptions": 45,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "Multiple people engage in repeated close-range strikes, pushes, or forceful restraint, causing another person to stumble, fall, or remain on the ground while participants withdraw."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "One or more individuals direct force toward a person through punching, kicking, grabbing, blocking, or pinning, occasionally using a stick or nearby object."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "A sudden confrontation develops into pursuit or sustained physical contact, followed by a fall, attempted escape, intervention, separation, or departure from the scene."
+        },
+        {
+          "type": "scene_context",
+          "text": "The behavior occurs in shared public or enclosed spaces where groups gather around an individual, restrict movement, intervene, disperse, or assist afterward."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinguish sustained harmful contact with retreat, restraint, or visible distress from brief accidental contact, playful movement, organized sport, routine crowding, or ordinary verbal disagreement."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "One or more people approach an individual, deliver repeated punches or kicks, surround or restrain the person after a fall, then leave while the person remains down.",
+          "rationale": "Repeated striking, group involvement, falling, and departure recur across outdoor and indoor settings."
+        },
+        {
+          "cluster_id": 0,
+          "text": "A sudden strike or push initiates a short pursuit or continued attack, with the targeted person falling, attempting escape, or lying motionless as others withdraw.",
+          "rationale": "Many sequences begin abruptly, continue through pursuit or additional blows, and end with the affected person separated from the departing aggressor."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Groups gather around a person and continue coordinated blows, sometimes using a stick or nearby object; bystanders intervene, participants disperse, and assistance follows.",
+          "rationale": "Recurring escalation involves several participants, occasional handheld objects, intervention by others, and later separation or care."
+        },
+        {
+          "cluster_id": 1,
+          "text": "One person repeatedly strikes or forcefully restrains another at close range, while nearby individuals intervene, separate them, or lead the targeted person away before renewed contact.",
+          "rationale": "Repeated close-contact force and attempted separation occur across offices, shops, seating areas, and enclosed transport spaces."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A confrontation escalates in a confined workplace, shop, or elevator as people block exits, pull or push one another, and leave separately after prolonged physical interaction.",
+          "rationale": "Several scenes show crowded or enclosed spaces, obstructed movement, physical grappling, and staggered departures following sustained disputes."
+        },
+        {
+          "cluster_id": 1,
+          "text": "After an initial disagreement or entry, a person returns or pursues another, continuing forceful contact until interveners or physical pressure drive the encounter toward an exit.",
+          "rationale": "Interactions commonly intensify over time, include returns or pursuit, and end when separation or movement outside interrupts the contact."
+        }
+      ]
+    },
+    "Burglary": {
+      "num_descriptions": 87,
+      "num_clusters": 3,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "One or more people force entry into a building, search interior spaces, gather portable property, and depart rapidly with it."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "People use tools, impacts, ropes, or vehicles to open barriers, remove secured objects, load selected items, and coordinate movement toward transport."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "Arrival by vehicle is followed by surveillance, forced access, searching and collecting objects, repeated trips outside, loading, and coordinated departure."
+        },
+        {
+          "type": "scene_context",
+          "text": "Commercial or residential entrances show damaged doors, windows, counters, or storage areas, with multiple people moving goods between interior spaces and vehicles."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Routine delivery, moving, maintenance, or retail activity involves visible permission, orderly handling, and open transport without forced access, concealment, or hurried searching."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "A vehicle repeatedly strikes or reverses through a glass entrance, enabling several people to enter, disturb displays, gather goods, and leave together in the vehicle.",
+          "rationale": "Repeated vehicle-based entry is followed by coordinated movement inside and a group departure."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Several people use ropes, tools, or vehicles to attach and drag a heavy cash machine or metal cabinet from a building toward a waiting vehicle.",
+          "rationale": "Multiple descriptions show coordinated attempts to remove heavy equipment using ropes, vehicles, and physical pushing."
+        },
+        {
+          "cluster_id": 0,
+          "text": "After forcing entry through glass doors or counters, groups of people collect phones, displayed items, bags, or equipment, then exit sequentially and depart by car or truck.",
+          "rationale": "Entry is followed by gathering portable goods and leaving in sequence, often with transport waiting outside."
+        },
+        {
+          "cluster_id": 1,
+          "text": "People force entry through doors or windows, move through rooms and counters, search cabinets and containers, gather portable objects, and depart quickly with items.",
+          "rationale": "Repeated sequences show entry followed by systematic searching, collection of objects, and rapid departure."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Small groups coordinate while one watches entrances; others use tools or impacts to open doors, drawers, machines, or safes, then carry contents outside.",
+          "rationale": "Multiple descriptions depict coordinated roles, forced access, mechanical work, and removal of objects or containers."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Intruders repeatedly check surroundings, crouch or crawl while searching, place selected objects into pockets, bags, or boxes, and return for additional items before leaving.",
+          "rationale": "The recurring temporal pattern combines cautious movement, concealment of gathered objects, repeated searching, and eventual exit."
+        },
+        {
+          "cluster_id": 2,
+          "text": "People arrive by car or truck, inspect a house entrance, force or open a door, enter briefly, and later return carrying household objects toward the vehicle.",
+          "rationale": "Repeated sequences connect vehicle arrival, entrance manipulation, interior access, object removal, and departure across multiple locations."
+        },
+        {
+          "cluster_id": 2,
+          "text": "A person approaches a doorway or window, looks inside, manipulates the opening, climbs or steps through, moves between rooms, and exits carrying bags, boxes, or equipment.",
+          "rationale": "Several descriptions show deliberate access through doors or windows followed by movement inside and removal of portable items."
+        },
+        {
+          "cluster_id": 2,
+          "text": "Multiple people coordinate around a parked vehicle while one or more enter a building, gather televisions, boxes, bags, or metal objects, load them into the vehicle, and leave.",
+          "rationale": "Group activity repeatedly combines building entry, object handling, vehicle loading, and coordinated departure."
+        }
+      ]
+    },
+    "Explosion": {
+      "num_descriptions": 29,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "A sudden ignition produces bright flames, sparks, and thick smoke from a vehicle, object, or leaked material, with combustion remaining visibly intense rather than momentary."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "People or vehicles are positioned near an ignited vehicle or roadside object; flames and heat visibly affect adjacent surfaces, prompting occupants or bystanders to retreat and traffic to halt."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "The event begins with a flash or small flame, intensifies as fire spreads and smoke thickens, then diminishes into lingering smoke, scattered debris, or residual glowing areas."
+        },
+        {
+          "type": "scene_context",
+          "text": "Typical settings include roads, parking areas, buildings, and open grounds where vehicles, structures, or stored materials provide visible surfaces for sudden ignition and spreading fire."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Brief headlights, exhaust, dust, steam, sparks, or reflections may resemble the initial flash, but they lack sustained flames, expanding smoke, heat effects, and retreating people."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "A parked or moving vehicle begins burning, with flames intensifying around its rear or body while dense dark smoke rises and persists.",
+          "rationale": "Several descriptions show vehicle burning followed by sustained flames and prominent smoke."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Flames spread from one vehicle or leaked material to nearby surfaces or vehicles, producing larger burning areas before later subsiding.",
+          "rationale": "The fire visibly extends across adjacent material, nearby vehicles, or the surrounding ground."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Burning continues for an extended interval, with a sudden flare-up followed by reduced flames and lingering thick smoke above the vehicle.",
+          "rationale": "Multiple sequences include prolonged burning, a later increase in intensity, and smoke remaining after flames diminish."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A sudden bright burst or flame appears in a roadway or built area, followed by dense smoke spreading outward while nearby pedestrians or individuals quickly retreat.",
+          "rationale": "Repeated sequences show a rapid bright event followed by expanding smoke and people moving away."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A vehicle or roadside object abruptly emits fire, smoke, or scattered debris; nearby traffic may stop, while occupants or bystanders leave and surrounding vehicles continue moving.",
+          "rationale": "Several scenes connect vehicles or roadside objects with sudden emissions, stopped traffic, departing occupants, and continuing nearby movement."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A concentrated flash, sparks, or luminous burst occurs indoors or outdoors, followed by dust or smoke that expands and obscures people, structures, or nearby ground.",
+          "rationale": "Recurring visual progression begins with intense light or sparks and ends with spreading particulate material that reduces visibility."
+        }
+      ]
+    },
+    "Fighting": {
+      "num_descriptions": 45,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "Multiple people engage in sudden physical clashes involving pushing, striking, kicking, grabbing, and grappling, with participants falling, rising, and reestablishing contact."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "Participants may wield or swing nearby objects such as chairs, bottles, sticks, or tools, while others block, disarm, restrain, or pull them away."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "A tense exchange escalates from isolated contact to group grappling, followed by falls, intervention, temporary separation, and possible renewed contact."
+        },
+        {
+          "type": "scene_context",
+          "text": "Crowded public or indoor settings show clustered participants, surrounding onlookers, blocked movement, scattered belongings, and people attempting to create distance."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Unlike organized play or routine jostling, participants show unscripted reciprocal force, defensive restraint, disorderly movement, and visible efforts to separate involved people."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "Multiple people engage in sudden physical confrontations, with grabbing, punching, kicking, pushing, and grappling; participants may fall, rise, and resume contact as others intervene.",
+          "rationale": "Repeated sequences show direct bodily contact between several people, interrupted by falls, renewed engagement, and intervention from nearby individuals."
+        },
+        {
+          "cluster_id": 0,
+          "text": "During confrontations, participants brandish or use nearby objects such as chairs, bottles, knives, axes, hammers, or sticks, while opponents attempt to disarm or restrain them.",
+          "rationale": "Several scenes include objects being raised, swung, or held threateningly, followed by attempts to seize the object or control its holder."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Bystanders, guards, or officers repeatedly separate participants, hold someone down, check a fallen person, or escort individuals away, after which groups disperse and people leave.",
+          "rationale": "Intervention commonly follows the physical contact, with separation, restraint, welfare checks, escorted removal, and gradual dispersal."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Several people gather around a verbal dispute, then participants push, punch, grapple, or pull one another down as bystanders intervene, surround them, and disperse.",
+          "rationale": "Repeated sequences show a gathering and verbal confrontation escalating into close physical contact, followed by intervention and separation."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A confrontation repeatedly escalates from isolated contact to multiple participants striking or restraining one another, with people joining, separating individuals, and moving the struggle between nearby areas.",
+          "rationale": "Many scenes depict additional people joining after an initial dispute, producing shifting groups, restraint, relocation, and renewed physical exchanges."
+        },
+        {
+          "cluster_id": 1,
+          "text": "After someone falls, surrounding participants may continue physical contact while others check, pull people away, or leave; the group later regathers and resumes the dispute.",
+          "rationale": "Falls commonly interrupt but do not end the interaction, with checking, withdrawal, regrouping, and renewed contact occurring later."
+        }
+      ]
+    },
+    "Normal": {
+      "num_descriptions": 763,
+      "num_clusters": 12,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "People and vehicles follow ordinary routes, repeatedly walking, driving, stopping, turning, entering, exiting, and continuing through shared spaces."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "Individuals routinely handle documents, bags, merchandise, tools, and vehicles, exchanging objects, operating counters, opening doors, and organizing nearby areas."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "Activity unfolds through repeated cycles of arrival, brief pauses, conversation, transactions, movement between areas, and departure, with different participants replacing one another over time."
+        },
+        {
+          "type": "scene_context",
+          "text": "Shared roads, workplaces, stores, corridors, dining areas, and public interiors show steady circulation, organized routines, and people using spaces for everyday purposes."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Brief stops, queues, gatherings, and vehicle maneuvering remain coordinated and purposeful, with participants resuming ordinary movement rather than causing visible disruption."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "Vehicles repeatedly travel along roads in both directions, turning, stopping, reversing, or passing through intersections and beside parked cars.",
+          "rationale": "Repeated descriptions show continuous traffic flow with varied directions and routine road maneuvers."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Cars and trucks arrive, depart, park, or maneuver through parking areas, while pedestrians walk nearby and occupants enter or exit vehicles.",
+          "rationale": "Parking areas frequently combine vehicle movements with people walking and using cars."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Parked cars and trucks remain along roads or in lots while other vehicles pass sequentially, reverse, turn, stop, and later depart.",
+          "rationale": "Stationary vehicles commonly coexist with passing traffic and intermittent parking maneuvers."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Multiple office workers remain at desks, using computers and reviewing documents, with brief conversations, phone use, writing, and occasional standing or moving between workstations.",
+          "rationale": "Desk-based work, communication, and short periods of movement recur across many office scenes."
+        },
+        {
+          "cluster_id": 1,
+          "text": "People repeatedly enter and leave office areas, walk through aisles or doorways, pause to talk with coworkers, and return to desks or nearby rooms.",
+          "rationale": "Frequent circulation through shared workspaces and brief coworker interactions form a recurring temporal pattern."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Staff members handle papers, boxes, bags, and other objects, exchanging items, organizing work surfaces, opening drawers, and checking materials during routine interactions.",
+          "rationale": "Material handling and document exchange repeatedly accompany ordinary workplace communication and organization."
+        },
+        {
+          "cluster_id": 2,
+          "text": "People occupy shared indoor dining or lounge spaces, alternating between sitting, eating, talking, using phones, and walking around tables, aisles, counters, or nearby furniture over time.",
+          "rationale": "Recurring scenes show routine social activity in populated indoor spaces, with seated and standing people interacting while others pass through."
+        },
+        {
+          "cluster_id": 2,
+          "text": "Crowds and individuals move continuously through halls, entrances, exhibition areas, and other public interiors, while some wait, gather, sit, or pass one another without major environmental change.",
+          "rationale": "Multiple descriptions emphasize steady pedestrian movement or waiting in shared public areas with stable surroundings."
+        },
+        {
+          "cluster_id": 2,
+          "text": "Groups engage in structured everyday activities such as classroom work, children's play, sports, performances, or gaming, with participants remaining focused in shared spaces and repeating actions.",
+          "rationale": "Recurring organized activities involve children, students, spectators, or players maintaining attention and repeated movements within consistent indoor or recreational settings."
+        },
+        {
+          "cluster_id": 3,
+          "text": "Customers repeatedly enter stores, browse shelves or displays, select and inspect products, approach checkout counters, and leave carrying bags or purchased goods.",
+          "rationale": "This pattern recurs across supermarkets and small shops, combining routine browsing, product handling, checkout movement, and departures."
+        },
+        {
+          "cluster_id": 3,
+          "text": "Clerks remain behind counters, organize merchandise, operate registers or computers, exchange goods and payment, provide change or receipts, and package purchases.",
+          "rationale": "Store workers consistently alternate between customer service, payment handling, item organization, equipment use, and preparing purchases for removal."
+        },
+        {
+          "cluster_id": 3,
+          "text": "Store activity unfolds in repeated customer-service cycles, with people approaching counters, communicating, exchanging products or documents, completing transactions, and returning toward exits.",
+          "rationale": "Across the descriptions, interactions follow a recurring temporal sequence from arrival and discussion through exchange, completion, and departure."
+        },
+        {
+          "cluster_id": 4,
+          "text": "People repeatedly enter, exit, and cross indoor corridors, halls, and doorways, with individuals arriving at different times, pausing briefly, and dispersing through adjacent spaces.",
+          "rationale": "Frequent pedestrian circulation through shared indoor passageways and entrances occurs across many scenes."
+        },
+        {
+          "cluster_id": 4,
+          "text": "Individuals move between rooms using doors, stairs, elevators, and escalators, often completing a simple route from one area to another before leaving the visible space.",
+          "rationale": "Sequential movement between connected indoor areas is repeatedly shown."
+        },
+        {
+          "cluster_id": 4,
+          "text": "People intermittently gather near counters, tables, or entrances to talk, look around, handle bags or objects, push carts or strollers, and then continue onward.",
+          "rationale": "Brief interactions with people and everyday objects recur around indoor activity areas."
+        },
+        {
+          "cluster_id": 5,
+          "text": "Crowds of shoppers and visitors continuously walk through mall corridors and storefronts in multiple directions, with some carrying bags, pushing carts, pausing, talking, or using phones.",
+          "rationale": "Repeated across malls and stores: sustained pedestrian traffic, varied groups, brief pauses, and routine carrying or communication behaviors."
+        },
+        {
+          "cluster_id": 5,
+          "text": "People repeatedly enter and leave stores while others travel on escalators, stairs, elevators, or open walkways, creating steady circulation around entrances and central public spaces.",
+          "rationale": "Multiple descriptions show continuous movement around storefronts and vertical transport areas, with pedestrians arriving, departing, and crossing in different directions."
+        },
+        {
+          "cluster_id": 5,
+          "text": "Customers move between supermarket shelves and checkout areas, inspect products, select items, fill or return carts, exchange brief words, and depart carrying purchases.",
+          "rationale": "Supermarket scenes consistently feature browsing, cart use, product handling, brief interactions, checkout activity, and customers leaving with items."
+        },
+        {
+          "cluster_id": 6,
+          "text": "People repeatedly enter and leave buildings or vehicles, gather in small groups, converse, use phones or counters, and continue routine movement while nearby traffic passes.",
+          "rationale": "Frequent arrivals, departures, brief conversations, waiting, and interactions with people or devices recur across public, roadside, and transport settings."
+        },
+        {
+          "cluster_id": 6,
+          "text": "Workers and visitors repeatedly carry, sort, stack, load, unload, or exchange goods using carts, boxes, shelves, trucks, conveyors, and other transport equipment.",
+          "rationale": "Handling, organizing, and transferring materials is repeatedly shown in shops, warehouses, factories, homes, and outdoor loading areas."
+        },
+        {
+          "cluster_id": 6,
+          "text": "Groups progressively arrange or inspect materials in shops, warehouses, factories, and outdoor work areas, with vehicles arriving, repositioning, departing, and activity continuing over time.",
+          "rationale": "Extended sequences commonly combine coordinated material handling, inspection, workplace movement, and recurring vehicle activity."
+        },
+        {
+          "cluster_id": 7,
+          "text": "Busy intersections and roadways carry continuous two-way traffic as cars, buses, trucks, motorcycles, bicycles, and electric vehicles pass, turn, merge, queue, and resume movement.",
+          "rationale": "Repeated descriptions emphasize sustained mixed traffic, signal-related pauses, turning movements, and alternating flows rather than a single isolated event."
+        },
+        {
+          "cluster_id": 7,
+          "text": "Pedestrians and cyclists repeatedly cross roads, use sidewalks, enter shops or buildings, approach parked vehicles, board transportation, and walk alongside ongoing traffic.",
+          "rationale": "People frequently move between sidewalks, crossings, buildings, parked vehicles, and public or private transportation while surrounding traffic continues."
+        },
+        {
+          "cluster_id": 7,
+          "text": "Traffic density fluctuates over time, with vehicles gathering in lines or temporary congestion, stopping at signals or platforms, then dispersing as movement continues in multiple directions.",
+          "rationale": "Sequences commonly alternate between flowing traffic, brief waits, grouped vehicles, turning movements, and renewed passage through connected roadways."
+        },
+        {
+          "cluster_id": 8,
+          "text": "People gather indoors around tables, counters, or desks, converse, gesture, use phones or computers, and intermittently sit, stand, exchange objects, or relocate.",
+          "rationale": "Repeated group interaction combines conversation, gestures, seating changes, and routine object use."
+        },
+        {
+          "cluster_id": 8,
+          "text": "Individuals handle documents, folders, bags, cups, boxes, clothing, or small tools by sorting, writing, storing, carrying, presenting, or passing them between people.",
+          "rationale": "Many scenes show purposeful handling and transfer of ordinary workplace or household items."
+        },
+        {
+          "cluster_id": 8,
+          "text": "People enter and leave through doors or hallways, cross shared rooms, approach counters, pause for conversation, and continue moving as others arrive or depart.",
+          "rationale": "Recurring movement links arrivals, brief exchanges, transitions between areas, and departures."
+        },
+        {
+          "cluster_id": 9,
+          "text": "Groups and individuals repeatedly walk along sidewalks and roadside paths in both directions while cars, trucks, buses, bicycles, or trains pass intermittently.",
+          "rationale": "This recurring pattern appears across many scenes, with pedestrian flow continuing alongside changing vehicle movement."
+        },
+        {
+          "cluster_id": 9,
+          "text": "People enter or leave buildings, pause to talk, consult phones, exchange directions, meet companions, and occasionally give way as vehicles turn nearby.",
+          "rationale": "Brief social interactions and doorway transitions recur throughout the described sequences."
+        },
+        {
+          "cluster_id": 9,
+          "text": "Pedestrians frequently carry bags, luggage, boxes, documents, household items, or backpacks, while families, older adults, strollers, dogs, and bicycles move through the area.",
+          "rationale": "Transporting personal items and accommodating varied pedestrians are repeated visible activities."
+        },
+        {
+          "cluster_id": 10,
+          "text": "Cars and vans repeatedly enter, leave, reverse, turn, reposition, and park around lots and roadside areas while other vehicles continue passing and pedestrians move nearby.",
+          "rationale": "Vehicle movement and parking adjustments recur across lots, roads, and roadside spaces, often alongside passing traffic and nearby pedestrians."
+        },
+        {
+          "cluster_id": 10,
+          "text": "People approach parked vehicles, open doors or trunks, enter and exit, carry or retrieve objects, then walk away as traffic and other pedestrians continue moving.",
+          "rationale": "Brief interactions with vehicle doors, trunks, passengers, and carried objects repeatedly precede people leaving or continuing through the area."
+        },
+        {
+          "cluster_id": 10,
+          "text": "Roadside activity includes people moving between cars, trucks, and vans, opening or closing doors, inspecting vehicles, exchanging items, and departing after brief stops.",
+          "rationale": "Short vehicle-side tasks involving inspection, loading, unloading, and communication appear repeatedly near roads, parking areas, and service locations."
+        },
+        {
+          "cluster_id": 11,
+          "text": "In shops, customers and staff repeatedly gather at counters, converse, handle or exchange merchandise, complete purchases, and move between shelves, doorways, and checkout areas.",
+          "rationale": "Repeated counter-based interactions combine conversation, merchandise handling, purchasing, and movement through retail spaces."
+        },
+        {
+          "cluster_id": 11,
+          "text": "Store workers regularly sort, shelve, pack, tape, and tidy goods while speaking with nearby people; customers wait, browse, carry items, and depart after brief interactions.",
+          "rationale": "Staff frequently maintain merchandise and packages while customers browse, wait, and communicate nearby."
+        },
+        {
+          "cluster_id": 11,
+          "text": "Across each scene, people enter and leave over time, approach counters or shelves, inspect or select objects, and pass items, papers, bags, or boxes during conversations.",
+          "rationale": "Recurring temporal activity involves arrivals, departures, object inspection, and exchanges around counters, shelves, and entrances."
+        }
+      ]
+    },
+    "RoadAccidents": {
+      "num_descriptions": 125,
+      "num_clusters": 4,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "Moving vehicles unexpectedly collide with other vehicles, pedestrians, cyclists, barriers, or roadside structures, causing sudden stops, displacement, overturning, or obstruction."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "Vehicles make contact with people, motorcycles, bicycles, or nearby objects; occupants and bystanders then approach, assist fallen individuals, inspect damage, or move around stopped vehicles."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "Traffic approaches, turns, reverses, or changes lanes; contact occurs, vehicles stop or shift position, and surrounding people gather while traffic continues or disperses."
+        },
+        {
+          "type": "scene_context",
+          "text": "Roads, intersections, parking areas, and storefront surroundings show active vehicle movement, abrupt obstruction, displaced vehicles, gathering bystanders, and altered traffic flow."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Unlike routine passing, parking, or orderly turning, the defining visual pattern is sudden contact followed by displaced people, stopped vehicles, and bystander response."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "During routine roadway traffic, a car, truck, or bus contacts a motorcycle, throwing riders down or toward the roadside while nearby vehicles continue moving.",
+          "rationale": "Repeated scenes show motorcycles interacting with larger vehicles, riders falling, and surrounding traffic remaining active before and after contact."
+        },
+        {
+          "cluster_id": 0,
+          "text": "A turning, reversing, or U-turning vehicle crosses a motorcycle's path, causing contact, rider displacement, and vehicles stopping or remaining nearby afterward.",
+          "rationale": "Several sequences repeatedly depict directional vehicle maneuvers intersecting with motorcycles and producing immediate displacement or stopped vehicles."
+        },
+        {
+          "cluster_id": 0,
+          "text": "After a roadway collision, drivers, pedestrians, and other riders approach fallen people and vehicles, inspect the scene, assist those involved, and gather beside the road.",
+          "rationale": "Post-contact scenes commonly include drivers exiting, bystanders approaching, and groups examining or helping people near the involved vehicles."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Vehicles traveling along roads suddenly collide with other cars, trucks, roadside structures, barriers, or pedestrians, sometimes overturning, leaving the roadway, raising dust, or producing smoke.",
+          "rationale": "Repeated scenes show moving vehicles contacting traffic, people, or nearby structures, followed by loss of control and visible environmental effects."
+        },
+        {
+          "cluster_id": 1,
+          "text": "After a collision, occupants exit or are helped out while nearby pedestrians run toward the scene, gather around damaged vehicles, inspect interiors, and assist injured or fallen people.",
+          "rationale": "People consistently approach the involved vehicles, check occupants and damage, and provide assistance after the main impact."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Traffic often continues passing as involved vehicles stop, reverse, activate lights, or depart; bystanders remain nearby, make calls, move drivers aside, and examine damage.",
+          "rationale": "Post-impact activity frequently unfolds alongside ongoing traffic, with vehicle repositioning, communication, inspection, and gradual dispersal."
+        },
+        {
+          "cluster_id": 2,
+          "text": "A vehicle suddenly drives through a glass storefront entrance, while people inside or nearby react, watch, and move around the damaged opening.",
+          "rationale": "Repeated sudden vehicle entry into a commercial interior is followed by visible glass breakage and attention from surrounding pedestrians."
+        },
+        {
+          "cluster_id": 2,
+          "text": "People stand near a store entrance or window as a vehicle approaches, stops or reverses, and occupants briefly exit, point, speak, or reenter.",
+          "rationale": "Several sequences combine vehicle maneuvering with short occupant departures, gestures, conversation, and repeated entry into the vehicle."
+        },
+        {
+          "cluster_id": 2,
+          "text": "Indoor shoppers or bystanders continue observing as a vehicle changes the scene, with people gathering near entrances and monitoring its movement.",
+          "rationale": "People inside and outside remain visually engaged while vehicle movement transforms the surrounding activity and draws attention toward the entrance."
+        },
+        {
+          "cluster_id": 3,
+          "text": "Vehicles traveling through roads or intersections collide during turns, approaches, or lane changes, sometimes involving parked vehicles, followed by continued traffic or altered vehicle positions.",
+          "rationale": "Repeated descriptions show moving vehicles making contact during intersections, turns, approaches, or lane changes, with traffic often continuing afterward."
+        },
+        {
+          "cluster_id": 3,
+          "text": "A moving vehicle contacts pedestrians or cyclists crossing or near the roadway, then departs or reverses while nearby people run over, gather, or inspect the scene.",
+          "rationale": "Several sequences involve vulnerable road users being contacted, followed by vehicle departure and people approaching, checking, or assisting."
+        },
+        {
+          "cluster_id": 3,
+          "text": "A vehicle collides with multiple vehicles or roadside objects in succession, leaving cars stopped, grouped, overturned, or obstructing traffic while surrounding movement continues.",
+          "rationale": "Recurring sequences feature successive contacts involving several vehicles or roadside barriers, followed by stopped vehicles, congestion, or ongoing traffic nearby."
+        }
+      ]
+    },
+    "Robbery": {
+      "num_descriptions": 143,
+      "num_clusters": 5,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "A person or group uses visible weapons, threats, or physical control to obtain valuables from others, then departs with the collected items."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "Individuals direct attendants or occupants to open registers, drawers, bags, or cabinets, remove cash and belongings, and transfer them into hands or containers."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "An ordinary approach shifts into weapon display or force, followed by controlled surrender, searching or collection of valuables, and rapid departure."
+        },
+        {
+          "type": "scene_context",
+          "text": "Events occur around staffed counters, enclosed premises, homes, roadside areas, or vehicles, with occupants complying, retreating, crouching, or being physically controlled."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Unlike routine purchases or ordinary disagreements, visible coercion links weapon display or force with compelled surrender of property and purposeful escape."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "An armed person approaches a retail counter, displays or points a handgun, and directs a clerk or attendant to open a register and hand over cash before departing.",
+          "rationale": "Repeated counter interactions involve a visible handgun, directed cashier actions, transferred cash, and departure."
+        },
+        {
+          "cluster_id": 0,
+          "text": "At a cashier area, one person retrieves money from one or more drawers while another person remains behind the counter, raises hands, or follows instructions; the armed person then gathers cash and leaves.",
+          "rationale": "Several scenes show attendants opening multiple drawers or complying while another person collects money."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Some encounters begin with ordinary counter communication or payment, followed by a person producing a handgun, collecting bills, checking surroundings, and departing.",
+          "rationale": "Routine-looking exchanges sometimes shift into visible weapon display, cash collection, situational checking, and exit."
+        },
+        {
+          "cluster_id": 1,
+          "text": "One or more people approach a pedestrian from motorcycles or vehicles, surround and control the person, remove a bag or belongings, then depart together.",
+          "rationale": "Repeated sequences show coordinated approaches, close interaction with a pedestrian, removal of personal items, and departure using nearby transportation."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A group confronts a person in a roadside area, with pushing, dragging, striking, or forced postures occurring before participants disperse or ride away.",
+          "rationale": "Several descriptions contain escalating physical control, temporary restraint or displacement, followed by separation of the involved people."
+        },
+        {
+          "cluster_id": 1,
+          "text": "An approaching person visibly carries a knife or reaches toward jewelry, a backpack, phone, or bag, takes the item, and quickly leaves the area.",
+          "rationale": "Recurring object-focused interactions involve personal belongings, visible threats or force, and rapid departure after contact."
+        },
+        {
+          "cluster_id": 2,
+          "text": "An armed person enters a shop, points a gun or knife toward clerks, gathers cash or merchandise into bags, and exits while others remain nearby.",
+          "rationale": "Repeated sequences show a threatening entrance, direct control of counter personnel, collection of visible valuables, and departure through the doorway."
+        },
+        {
+          "cluster_id": 2,
+          "text": "Multiple people move behind a counter, search drawers and cabinets, pass items between them, restrain or force employees aside, then leave carrying bags.",
+          "rationale": "Several scenes feature coordinated participants, counter-area searching, employee displacement, item transfer, and a later group departure."
+        },
+        {
+          "cluster_id": 2,
+          "text": "A confrontation develops after an armed entry or forced counter access, with clerks pursuing, grabbing, pushing, or striking participants before they escape.",
+          "rationale": "Recurring later actions include resistance from staff or bystanders, physical struggles near doors, chasing, and eventual escape from the premises."
+        },
+        {
+          "cluster_id": 3,
+          "text": "An armed person approaches a staffed counter, points a weapon, forces the attendant to open the register, receives cash or items, and exits quickly.",
+          "rationale": "This pattern repeatedly shows weapon display, compliance at the counter, transfer of valuables, and departure."
+        },
+        {
+          "cluster_id": 3,
+          "text": "Several people enter together; one controls occupants with a weapon while others search drawers, cabinets, or counters, place valuables into bags, and leave through the entrance.",
+          "rationale": "Group coordination commonly combines occupant control, searching, collecting items, and coordinated departure."
+        },
+        {
+          "cluster_id": 3,
+          "text": "After entering a counter area, a person climbs over or moves behind the counter, removes money or goods, and escapes while staff or customers retreat, crouch, or run.",
+          "rationale": "Counter intrusion, removal of valuables, and immediate movement away recur across many sequences."
+        },
+        {
+          "cluster_id": 4,
+          "text": "Several men enter homes or shops carrying guns, point them at occupants, force people to move or lie down, collect bags or belongings, and leave together.",
+          "rationale": "Repeated sequences show coordinated entry, weapon display, control of occupants, removal of portable property, and group departure."
+        },
+        {
+          "cluster_id": 4,
+          "text": "People are repeatedly surrounded, grabbed, pushed, or struck during tense encounters, with struggles continuing across rooms and sometimes ending when participants flee or remain down.",
+          "rationale": "Multiple scenes feature sustained physical control, resistance, falls, and dispersal after confrontations involving several participants."
+        },
+        {
+          "cluster_id": 4,
+          "text": "Individuals are searched or made to surrender phones, bags, cash, and other items; collected goods are handed over, loaded into vehicles, or carried away as groups disperse.",
+          "rationale": "The descriptions repeatedly depict personal property changing hands after coercive encounters, followed by removal from the immediate area."
+        }
+      ]
+    },
+    "Shooting": {
+      "num_descriptions": 27,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "A person raises and aims a handgun at nearby people, sometimes discharges it, while targets or bystanders fall, flee, crouch, or scatter."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "An armed person directs a handgun toward occupants or passersby, using threatening gestures while advancing, confronting, or pursuing them and controlling their movement."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "Routine activity is interrupted when a firearm appears; aiming or repeated discharge follows, then targets collapse or escape and the armed person withdraws."
+        },
+        {
+          "type": "scene_context",
+          "text": "Visual settings include occupied rooms, counters, doorways, roadside areas, or parked vehicles where armed confrontation prompts abrupt, collective movement by nearby people."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinguish from ordinary firearm carrying, pointing during conversation, or people merely running: the defining pattern combines directed aiming, discharge, and immediate fear-driven reactions."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "A person draws or raises a handgun toward another person, fires at close or medium range, and the targeted person falls while nearby people flee.",
+          "rationale": "This pattern recurs across rooms, storefronts, roads, vehicles, and outdoor gatherings, with directed firearm use followed by collapse or rapid escape."
+        },
+        {
+          "cluster_id": 0,
+          "text": "An armed person confronts others in indoor or roadside settings, aims while advancing or chasing, and surrounding people run, crouch, hide, or raise their hands.",
+          "rationale": "Multiple scenes depict visible intimidation through an aimed firearm, followed by defensive postures, pursuit, or hurried movement by nearby people."
+        },
+        {
+          "cluster_id": 0,
+          "text": "After ordinary activity around cars, counters, or rooms, a person produces a firearm, fires repeatedly, then leaves or escapes as others react.",
+          "rationale": "Several descriptions share a transition from routine interaction to firearm use, followed by departure, vehicle movement, fleeing individuals, or people remaining on the ground."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Armed men enter an occupied indoor space, raise or point handguns toward people, and trigger rapid movement as occupants run, fall, or scatter.",
+          "rationale": "Several scenes show weapon-bearing men entering occupied interiors, directing guns at nearby people, followed by fleeing, falling, or widespread movement."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A person holding a handgun approaches a counter or doorway, gestures toward nearby occupants, and remains briefly while others move away or leave the area.",
+          "rationale": "Weapon carriers repeatedly approach desks, counters, or doorways while surrounding people react by retreating, running, or exiting."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Helmeted or masked men enter premises in groups, seize portable goods or merchandise, and depart quickly after moving through the interior.",
+          "rationale": "Multiple scenes include concealed or helmeted entrants who move through buildings, collect valuable or portable objects, and leave soon afterward."
+        }
+      ]
+    },
+    "Shoplifting": {
+      "num_descriptions": 29,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "Individuals select merchandise, handle multiple items, conceal chosen goods in clothing or bags, and move away from displays or counters without completing ordinary purchase behavior."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "A person or small group manipulates merchandise, transfers items between hands or bags, uses companions as visual cover, and keeps selected goods out of open view."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "Browsing develops into repeated selection, inspection, concealment, regrouping, and departure, with brief pauses near counters or exits and companions coordinating movement."
+        },
+        {
+          "type": "scene_context",
+          "text": "Retail aisles, display counters, and checkout approaches contain concentrated handling of goods, clustered companions, occluded hands, and movement away from merchandise areas."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinguish covert concealment and coordinated departure from ordinary browsing, product comparison, phone use, conversation, or returning items openly to displays."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "People browse merchandise, repeatedly handle garments or other goods, conceal selected items in clothing, bags, or behind the body, then move toward exits while companions continue browsing.",
+          "rationale": "Recurring scenes show concealed merchandise, continued browsing by companions, and movement toward departure across several retail settings."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Small groups coordinate around displays, passing, stacking, or packing merchandise into carried bags while others remain nearby, converse, monitor surroundings, or approach counters before the group departs.",
+          "rationale": "Multiple descriptions feature coordinated handling, nearby companions, packed bags, conversation, and eventual group departure."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Individuals repeatedly select multiple products, inspect and reposition them, conceal some in sleeves, clothing, or bags, and leave after brief counter interactions or continued observation.",
+          "rationale": "Repeated product selection and concealment occur with garments, bottles, phones, glasses, fabrics, and other displayed goods."
+        },
+        {
+          "cluster_id": 1,
+          "text": "A person examines phones at a counter, handles more than one device, places one into a pocket while returning another, then departs from the area.",
+          "rationale": "Both scenes show close interaction with displayed phones, selective handling of devices, and departure after the interaction."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Several people cluster around a phone display, exchange a device between individuals, converse during the handling, and later disperse or follow one another.",
+          "rationale": "The descriptions repeatedly combine group gathering, device exchanges, conversation, and movement away from the display."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Personal phone use and group conversation occur around displayed devices, followed by a phone being returned and people leaving in sequence.",
+          "rationale": "Phone use, social interaction, device replacement, and staggered departures form a recurring temporal sequence."
+        }
+      ]
+    },
+    "Stealing": {
+      "num_descriptions": 95,
+      "num_clusters": 3,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "People approach unattended vehicles or motorcycles, manipulate doors, locks, covers, or attached components, remove property or reposition the vehicle, then depart carrying items or riding away."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "One or more individuals inspect a parked vehicle, reach into compartments, handle belongings or parts, and transfer selected objects to a waiting car, motorcycle, bag, or carried container."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "The behavior progresses from arrival and surveillance to coordinated access, handling or removal, possible loading or repositioning, and departure on foot or in a vehicle."
+        },
+        {
+          "type": "scene_context",
+          "text": "Typically occurs around parked cars or motorcycles in shared outdoor areas, with individuals lingering, watching surroundings, using tools or keys, and coordinating near waiting transport."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinguish from routine maintenance or authorized loading by concealed access, repeated checking of surroundings, unannounced removal, or departure with another person's property."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "People approach parked cars or motorcycles, open doors or manipulate parts, move vehicles or remove attached objects, then leave quickly by vehicle or on foot.",
+          "rationale": "Repeated scenes show coordinated approaches, direct interaction with parked vehicles, removal or repositioning, and departure shortly afterward."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Groups arrive in cars or trucks, handle parked motorcycles, tires, bags, or other contents, load them into a vehicle, and depart together.",
+          "rationale": "Multiple scenes feature several people transferring vehicles, components, or belongings into waiting cars or trucks before leaving."
+        },
+        {
+          "cluster_id": 0,
+          "text": "Individuals linger near vehicles, look around, pry or strike openings, retrieve belongings or components, and retreat toward waiting motorcycles or cars.",
+          "rationale": "Recurring actions include surveillance of surroundings, forceful access to vehicles, removal of visible items, and rapid movement back to transport."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Individuals approach parked motorcycles, repeatedly look around, handle front or ignition areas with tools or keys, reposition the vehicle, then start it or push and ride it away.",
+          "rationale": "Repeated sequences show close inspection, manipulation, repositioning, and eventual movement of motorcycles away from their original locations."
+        },
+        {
+          "cluster_id": 1,
+          "text": "People uncover or inspect covered motorcycles, lift cloths, examine chains and other parts, test or pry components, then replace coverings or move the vehicles away.",
+          "rationale": "Multiple descriptions feature concealed motorcycles being revealed, examined, worked on, and later covered again or relocated."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Several people arrive near parked motorcycles, communicate and point while one handles parts or removes items, others assist, and the group pushes or rides vehicles away.",
+          "rationale": "Recurring group activity includes lookout behavior, coordinated handling, assistance, and joint movement of motorcycles from yards or roadside areas."
+        },
+        {
+          "cluster_id": 2,
+          "text": "One or more people approach a parked vehicle, force a window or door with a tool, reach inside, search compartments, and remove objects before leaving or departing in another car.",
+          "rationale": "Repeated scenes show deliberate vehicle access followed by searching and removal of visible belongings, often ending with departure from the area."
+        },
+        {
+          "cluster_id": 2,
+          "text": "A person enters a parked car through an opened door or damaged window, remains inside while handling items or controls, then exits, closes the vehicle, and walks or drives away.",
+          "rationale": "Individuals frequently spend extended periods inside vehicles, moving items, checking compartments, or manipulating controls before leaving."
+        },
+        {
+          "cluster_id": 2,
+          "text": "Two or more people arrive by car, coordinate around a parked vehicle, transfer contents into their own vehicle, and depart quickly, sometimes after lights flash or nearby people react.",
+          "rationale": "Multiple-person sequences commonly include coordinated access, shared handling of contents, vehicle transfers, and rapid departure following visible signals or attention."
+        }
+      ]
+    },
+    "Vandalism": {
+      "num_descriptions": 44,
+      "num_clusters": 2,
+      "final_prototypes": [
+        {
+          "type": "core_action",
+          "text": "People deliberately apply repeated force, kicks, impacts, or substances to vehicles, fixtures, barriers, or building surfaces, visibly altering, breaking, or displacing property."
+        },
+        {
+          "type": "actor_object_interaction",
+          "text": "One or more individuals approach an unattended object or structure, make direct damaging contact or mark its surface, then withdraw while avoiding normal use."
+        },
+        {
+          "type": "temporal_progression",
+          "text": "An approach develops into repeated impacts, marking, dismantling, or displacement; participants pause, reposition, and depart after visible changes accumulate."
+        },
+        {
+          "type": "scene_context",
+          "text": "Outdoor streets, storefronts, parking areas, and building exteriors show people interacting forcefully with stationary property, sometimes leaving scattered materials or disturbed surroundings."
+        },
+        {
+          "type": "hard_negative_distinction",
+          "text": "Distinguish deliberate repeated contact that changes property from routine parking, deliveries, maintenance, cleaning, lawful writing, or brief incidental touches without visible disruption."
+        }
+      ],
+      "candidate_prototypes": [
+        {
+          "cluster_id": 0,
+          "text": "A vehicle repeatedly advances into a fixed roadside barrier, reverses after contact, then drives away before making another approach.",
+          "rationale": "Repeated forward contact, backward correction, and departure form a clear temporal sequence involving a vehicle and stationary public structure."
+        },
+        {
+          "cluster_id": 0,
+          "text": "People rapidly enter and exit a commercial interior, move in opposing directions, and displace merchandise while activity continues around a moving vehicle.",
+          "rationale": "Rapid crowd movement, opposing flows, fallen goods, and nearby vehicle motion create a recurring pattern of disorderly activity."
+        },
+        {
+          "cluster_id": 0,
+          "text": "After repeated vehicle repositioning, a person returns near the recording device and visibly damages it, producing strong screen movement before departure.",
+          "rationale": "The sequence links a person's approach with direct contact against recording equipment and subsequent visual disturbance."
+        },
+        {
+          "cluster_id": 1,
+          "text": "One or more people approach parked vehicles, then repeatedly strike, kick, scratch, pour liquid over, or disturb mirrors and windows before moving away or running off.",
+          "rationale": "Repeated descriptions show direct physical contact with multiple parked vehicles, often involving several actions followed by departure."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Individuals approach building or shop entrances and apply spray, paint, liquid, writing, flyers, or thrown objects to doors, walls, windows, and nearby structures, then leave.",
+          "rationale": "Multiple scenes depict people marking, coating, striking, or covering exterior surfaces around entrances before departing."
+        },
+        {
+          "cluster_id": 1,
+          "text": "Groups or pairs move along streets while throwing, kicking, pushing, lifting, or dismantling roadside objects and containers, sometimes scattering debris before running or walking away.",
+          "rationale": "Recurring interactions involve shared manipulation of bins, objects, barriers, and structures in public areas, followed by dispersal."
+        }
+      ]
+    }
+  }
+}
