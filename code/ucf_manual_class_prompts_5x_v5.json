@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "name": "manual_clip_friendly_5_prompts_per_class_v6",
+    "dataset": "UCF-Crime",
+    "classes": 14,
+    "prompts_per_class": 5,
+    "language": "English",
+    "style": "Semantic-preserving CLIP-friendly surveillance prompts with improved class separation.",
+    "design_notes": [
+      "Prompts preserve anomaly class semantics while emphasizing visible frame-level evidence.",
+      "Descriptions avoid excessive temporal reasoning because VadCLIP aligns frame-level visual features.",
+      "Similar classes are separated by emphasizing different visual cues and contexts.",
+      "Prompts are designed for text-visual similarity analysis."
+    ]
+  },
+
+  "classes": {
+
+    "Abuse": [
+      "physical abuse where one person repeatedly hurts another person in a close environment",
+      "a person being subjected to repeated physical violence by another person",
+      "a person aggressively grabbing and hurting another person indoors",
+      "a person repeatedly attacking someone who appears unable to escape",
+      "domestic violence involving physical harm between two people"
+    ],
+
+    "Arrest": [
+      "police arresting and restraining a suspect with handcuffs",
+      "law enforcement officers detaining a person during an arrest",
+      "a police officer holding a detained suspect in custody",
+      "a person being arrested by uniformed police officers",
+      "police officers surrounding and controlling a detained person"
+    ],
+
+    "Arson": [
+      "a person intentionally setting fire to a building or object",
+      "a person starting a fire using a lighter or flammable material",
+      "a deliberate fire being created on someone's property",
+      "a person causing flames on an object or structure",
+      "a scene showing a person involved in setting property on fire"
+    ],
+
+    "Assault": [
+      "a person physically attacking another person with punches or kicks",
+      "one person violently striking another person during an assault",
+      "a person hitting or kicking someone in a one-sided physical attack",
+      "a person attacking another individual in a public place",
+      "a victim being physically assaulted by a single attacker"
+    ],
+
+    "Burglary": [
+      "a person illegally entering a building to steal property",
+      "a burglar breaking into a house or restricted building",
+      "a person forcing entry into a closed building",
+      "an intruder searching inside a building after unauthorized entry",
+      "a person entering private property without permission"
+    ],
+
+    "Explosion": [
+      "a sudden explosion causing fire, smoke, and flying debris",
+      "a powerful blast destroying an object or structure",
+      "an explosive event with a large fireball and smoke cloud",
+      "a scene showing damage caused by an explosive blast",
+      "a violent explosion producing scattered debris and destruction"
+    ],
+
+    "Fighting": [
+      "two or more people physically fighting each other",
+      "a group of people involved in a violent fight or brawl",
+      "multiple people punching and attacking each other",
+      "people engaging in mutual physical combat",
+      "a public fight where both sides are physically attacking"
+    ],
+
+    "Normal": [
+      "normal daily activity with people walking calmly in public areas",
+      "ordinary people and vehicles moving in a regular environment",
+      "people shopping or standing normally without unusual activity",
+      "a normal street scene with everyday human activity",
+      "routine activities occurring in a public place"
+    ],
+
+    "RoadAccidents": [
+      "vehicles involved in a traffic accident on a road",
+      "a damaged vehicle after a collision or crash",
+      "a car or motorcycle accident causing road damage",
+      "vehicles colliding and creating a traffic accident scene",
+      "a roadway with crashed vehicles after an accident"
+    ],
+
+    "Robbery": [
+      "a person threatening another person while taking their belongings",
+      "a robbery where someone uses intimidation or force to steal property",
+      "a person confronting a victim and demanding valuables",
+      "an armed person committing a robbery against another person",
+      "a criminal taking possessions from someone through threats"
+    ],
+
+    "Shooting": [
+      "a person firing a gun at another person",
+      "an armed person aiming and shooting a firearm",
+      "a shooting incident involving a visible gun",
+      "a person using a firearm during a violent event",
+      "a gun being fired in a public area"
+    ],
+
+    "Shoplifting": [
+      "a person secretly taking merchandise from a store without paying",
+      "a shopper hiding store products inside clothing or a bag",
+      "a person stealing items from a retail store",
+      "a customer leaving a shop with concealed merchandise",
+      "a person removing store goods without permission"
+    ],
+
+    "Stealing": [
+      "a person taking another person's property without permission",
+      "a person secretly stealing an unattended object",
+      "a person removing someone's belongings and leaving",
+      "a thief taking personal property in a public place",
+      "a person carrying away stolen items"
+    ],
+
+    "Vandalism": [
+      "a person intentionally damaging public or private property",
+      "a person destroying or defacing objects without taking them",
+      "a person damaging a wall, vehicle, or public facility",
+      "property being damaged through vandalism or destruction",
+      "a person breaking or marking property in a destructive way"
+    ]
+  }
+}

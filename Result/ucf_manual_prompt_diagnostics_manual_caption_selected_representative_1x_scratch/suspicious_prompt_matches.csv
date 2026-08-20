@@ -1,0 +1,15 @@
+class_name,prompt_index,prompt_text,own_class_similarity,best_other_class,best_other_similarity,other_minus_own,nearest_same_class_prompt_similarity
+Arson,0,arson a person lighting material before flames spread,1.0000001192092896,Shooting,0.9432404041290283,-0.05675971508026123,nan
+Shooting,0,shooting a shooting incident involving a visible gun,1.000000238418579,Arson,0.9432404041290283,-0.05675983428955078,nan
+Stealing,0,stealing a person secretly stealing an unattended object,0.9999998807907104,Arson,0.9275606274604797,-0.07243925333023071,nan
+Explosion,0,explosion a powerful blast destroying an object or structure,1.0,Normal,0.9127073287963867,-0.08729267120361328,nan
+Normal,0,normal an orderly scene with predictable everyday human activity,1.000000238418579,Explosion,0.9127073287963867,-0.08729290962219238,nan
+Burglary,0,burglary a person illegally entering a building to steal property,1.0,Robbery,0.9042199850082397,-0.09578001499176025,nan
+Robbery,0,robbery a threatening person demanding valuables from a victim,1.0,Burglary,0.9042199850082397,-0.09578001499176025,nan
+Fighting,0,fighting a public fight where both sides are physically attacking,0.9999998807907104,Vandalism,0.8689988851547241,-0.13100099563598633,nan
+Vandalism,0,vandalism someone striking public property until visible damage appears,1.0,Fighting,0.8689990043640137,-0.13100099563598633,nan
+Assault,0,assault an attacker swinging arms repeatedly at another person,1.0000001192092896,Normal,0.8673051595687866,-0.13269495964050293,nan
+Shoplifting,0,shoplifting a person secretly taking merchandise from a store without paying,1.000000238418579,Robbery,0.8599690198898315,-0.14003121852874756,nan
+Arrest,0,arrest a person being arrested by uniformed police officers,1.0,Robbery,0.8540027737617493,-0.14599722623825073,nan
+Abuse,0,abuse a vulnerable victim enduring repeated close range mistreatment,1.0,Fighting,0.8294001221656799,-0.17059987783432007,nan
+RoadAccidents,0,roadAccidents a vehicle collision causing roadway impact and disruption,1.0,Arrest,0.7897053956985474,-0.21029460430145264,nan

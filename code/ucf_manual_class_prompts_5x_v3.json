@@ -1,0 +1,120 @@
+{
+  "metadata": {
+    "name": "manual_clip_friendly_5_prompts_per_class_v3",
+    "dataset": "UCF-Crime",
+    "classes": 14,
+    "prompts_per_class": 5,
+    "language": "English",
+    "style": "CLIP-friendly surveillance caption prompts with stronger class separation.",
+    "created_by": "manual_codex_generation",
+    "source": "Hybrid rewrite from manual_caption_10x v1 and v2 using manual prompt diagnostics.",
+    "design_notes": [
+      "This version reduces each class from 10 prompts to 5 prompts.",
+      "Prompts were selected or rewritten using prompt-level AP, margin, text confusion, and class similarity diagnostics.",
+      "Explosion and Arson are separated by instant blast cues versus human ignition and gradual flame growth.",
+      "Burglary, Robbery, Stealing, and Shoplifting are separated by forced entry, victim coercion, unattended property, and retail concealment.",
+      "Shooting, Assault, Fighting, and Arrest are separated by firearm discharge, one-sided attack, mutual combat, and police custody cues.",
+      "Prompts avoid negation-heavy wording because CLIP may not reliably encode negative constraints."
+    ]
+  },
+  "classes": {
+    "Abuse": [
+      "a vulnerable victim enduring repeated close range mistreatment",
+      "a stronger aggressor controlling a weaker victim indoors",
+      "a helpless person recoiling from sustained physical abuse",
+      "a defenseless victim shielding from repeated aggressive contact",
+      "an aggressor dragging or overpowering a vulnerable person"
+    ],
+    "Arrest": [
+      "uniformed police placing handcuffs on a detained suspect",
+      "officers escorting a handcuffed person toward a patrol car",
+      "a handcuffed suspect standing between multiple police officers",
+      "law enforcement securing a suspect during formal custody",
+      "a detained person kneeling while officers apply restraints"
+    ],
+    "Arson": [
+      "a person lighting flammable material before flames spread",
+      "a person pouring accelerant before visible fire grows",
+      "a lighter touching a surface before ignition begins",
+      "small flames expanding after deliberate human ignition",
+      "a person retreating as planted fire starts spreading"
+    ],
+    "Assault": [
+      "a single attacker lunging with a direct strike",
+      "a one-sided attack with punches and defensive movement",
+      "an aggressor kicking a fallen victim on pavement",
+      "a victim stumbling backward after a sudden hit",
+      "an attacker chasing one target while striking repeatedly"
+    ],
+    "Burglary": [
+      "an intruder forcing entry through a locked doorway",
+      "a person prying a lock before entering property",
+      "a masked intruder breaking into a closed building",
+      "a person climbing through a window into private space",
+      "an intruder entering rooms after damaging an entry point"
+    ],
+    "Explosion": [
+      "an instant detonation expanding from a blast center",
+      "a shockwave pushing fragments outward within seconds",
+      "a structure bursting apart from explosive force",
+      "a concentrated blast throwing debris radially outward",
+      "a sudden pressure wave following a visible detonation"
+    ],
+    "Fighting": [
+      "two groups mutually exchanging punches in a brawl",
+      "multiple participants striking each other during mutual combat",
+      "opponents separating and reengaging in group fighting",
+      "several combatants grappling and swinging simultaneously",
+      "two sides clashing back and forth in public"
+    ],
+    "Normal": [
+      "pedestrians walking calmly along an ordinary street",
+      "people waiting and talking in a public area",
+      "vehicles moving steadily through regular traffic",
+      "customers standing calmly near store counters",
+      "people entering and exiting buildings at normal pace"
+    ],
+    "RoadAccidents": [
+      "a vehicle collision causing roadway impact and disruption",
+      "a car striking a pedestrian or cyclist on road",
+      "a motorbike sliding across a lane after collision",
+      "vehicles swerving before colliding in traffic",
+      "a crashed vehicle blocking lanes after impact"
+    ],
+    "Robbery": [
+      "a threatening person forcing a victim to surrender valuables",
+      "a victim handing belongings under close range intimidation",
+      "an attacker cornering a victim and seizing items",
+      "a person brandishing a weapon to demand property",
+      "a robber confronting a victim before taking belongings"
+    ],
+    "Shooting": [
+      "an armed person aiming and firing a firearm",
+      "a visible muzzle flash from a discharged gun",
+      "a shooter raising a gun before firing",
+      "a person firing a handgun in surveillance footage",
+      "an armed shooter discharging a weapon toward people"
+    ],
+    "Shoplifting": [
+      "a shopper concealing merchandise inside clothing or bag",
+      "a person hiding a retail item while browsing shelves",
+      "store goods disappearing beneath a jacket while shopping",
+      "a shopper slipping merchandise into a bag in aisle",
+      "a customer exiting retail space with concealed merchandise"
+    ],
+    "Stealing": [
+      "a person taking unattended property and leaving quickly",
+      "a thief grabbing a bicycle, bag, phone, or object",
+      "a suspect carrying property while the owner is distracted",
+      "a person pocketing an unattended item and changing direction",
+      "a thief quietly removing property from public space"
+    ],
+    "Vandalism": [
+      "a person smashing a window or door with force",
+      "a suspect spraying graffiti directly onto public property",
+      "a person breaking glass with repeated tool impacts",
+      "someone striking fixtures until visible damage appears",
+      "a person deliberately damaging property with tools or kicks"
+    ]
+  }
+}

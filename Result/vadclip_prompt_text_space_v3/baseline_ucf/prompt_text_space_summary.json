@@ -1,0 +1,522 @@
+{
+  "model_name": "baseline_ucf",
+  "model_path": "/content/drive/MyDrive/Finetune VadCLIP/model_ucf.pth",
+  "prompt_json": "/content/drive/MyDrive/Finetune VadCLIP/code/ucf_manual_class_prompts_5x_v3.json",
+  "classes": 14,
+  "prompts_per_class": 5,
+  "total_prompts": 70,
+  "wrong_nearest_original_anchor_prompts": 56,
+  "wrong_nearest_prompt_centroid_prompts": 13,
+  "wrong_nearest_centroid_to_anchor_classes": 12,
+  "lowest_prompt_anchor_margins": [
+    {
+      "class_index": 0,
+      "class_name": "Normal",
+      "prompt_index": 2,
+      "prompt_text": "vehicles moving steadily through regular traffic",
+      "own_anchor_similarity": 0.10375995934009552,
+      "best_other_anchor_class": "RoadAccidents",
+      "best_other_anchor_similarity": 0.6423755288124084,
+      "anchor_margin": -0.5386155843734741,
+      "nearest_anchor_class": "RoadAccidents",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 0,
+      "class_name": "Normal",
+      "prompt_index": 3,
+      "prompt_text": "customers standing calmly near store counters",
+      "own_anchor_similarity": 0.03286730498075485,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.5062278509140015,
+      "anchor_margin": -0.473360538482666,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 0,
+      "class_name": "Normal",
+      "prompt_index": 0,
+      "prompt_text": "pedestrians walking calmly along an ordinary street",
+      "own_anchor_similarity": 0.1571684628725052,
+      "best_other_anchor_class": "RoadAccidents",
+      "best_other_anchor_similarity": 0.617699921131134,
+      "anchor_margin": -0.46053147315979004,
+      "nearest_anchor_class": "RoadAccidents",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 0,
+      "class_name": "Normal",
+      "prompt_index": 1,
+      "prompt_text": "people waiting and talking in a public area",
+      "own_anchor_similarity": 0.26340270042419434,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6477024555206299,
+      "anchor_margin": -0.38429975509643555,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 10,
+      "class_name": "Shooting",
+      "prompt_index": 0,
+      "prompt_text": "an armed person aiming and firing a firearm",
+      "own_anchor_similarity": 0.11471207439899445,
+      "best_other_anchor_class": "Normal",
+      "best_other_anchor_similarity": 0.48286110162734985,
+      "anchor_margin": -0.3681490421295166,
+      "nearest_anchor_class": "Normal",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 10,
+      "class_name": "Shooting",
+      "prompt_index": 4,
+      "prompt_text": "an armed shooter discharging a weapon toward people",
+      "own_anchor_similarity": 0.1984747052192688,
+      "best_other_anchor_class": "Robbery",
+      "best_other_anchor_similarity": 0.531447172164917,
+      "anchor_margin": -0.3329724669456482,
+      "nearest_anchor_class": "Robbery",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 10,
+      "class_name": "Shooting",
+      "prompt_index": 3,
+      "prompt_text": "a person firing a handgun in surveillance footage",
+      "own_anchor_similarity": 0.27728843688964844,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.5899099111557007,
+      "anchor_margin": -0.31262147426605225,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 10,
+      "class_name": "Shooting",
+      "prompt_index": 1,
+      "prompt_text": "a visible muzzle flash from a discharged gun",
+      "own_anchor_similarity": 0.19942788779735565,
+      "best_other_anchor_class": "Robbery",
+      "best_other_anchor_similarity": 0.49342912435531616,
+      "anchor_margin": -0.2940012216567993,
+      "nearest_anchor_class": "Robbery",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 0,
+      "class_name": "Normal",
+      "prompt_index": 4,
+      "prompt_text": "people entering and exiting buildings at normal pace",
+      "own_anchor_similarity": 0.3497177064418793,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6147438287734985,
+      "anchor_margin": -0.26502612233161926,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 7,
+      "class_name": "Fighting",
+      "prompt_index": 0,
+      "prompt_text": "two groups mutually exchanging punches in a brawl",
+      "own_anchor_similarity": 0.2468322217464447,
+      "best_other_anchor_class": "Normal",
+      "best_other_anchor_similarity": 0.5042197108268738,
+      "anchor_margin": -0.2573874890804291,
+      "nearest_anchor_class": "Normal",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 4,
+      "class_name": "Assault",
+      "prompt_index": 2,
+      "prompt_text": "an aggressor kicking a fallen victim on pavement",
+      "own_anchor_similarity": 0.2808631360530853,
+      "best_other_anchor_class": "Robbery",
+      "best_other_anchor_similarity": 0.5373497605323792,
+      "anchor_margin": -0.2564866244792938,
+      "nearest_anchor_class": "Robbery",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 4,
+      "class_name": "Assault",
+      "prompt_index": 4,
+      "prompt_text": "an attacker chasing one target while striking repeatedly",
+      "own_anchor_similarity": 0.3482535183429718,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.5889190435409546,
+      "anchor_margin": -0.2406655251979828,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 7,
+      "class_name": "Fighting",
+      "prompt_index": 2,
+      "prompt_text": "opponents separating and reengaging in group fighting",
+      "own_anchor_similarity": 0.2594454288482666,
+      "best_other_anchor_class": "Normal",
+      "best_other_anchor_similarity": 0.49427172541618347,
+      "anchor_margin": -0.23482629656791687,
+      "nearest_anchor_class": "Normal",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 3,
+      "class_name": "Arson",
+      "prompt_index": 4,
+      "prompt_text": "a person retreating as planted fire starts spreading",
+      "own_anchor_similarity": 0.2654443681240082,
+      "best_other_anchor_class": "Robbery",
+      "best_other_anchor_similarity": 0.4981616735458374,
+      "anchor_margin": -0.23271730542182922,
+      "nearest_anchor_class": "Robbery",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 1,
+      "class_name": "Abuse",
+      "prompt_index": 4,
+      "prompt_text": "an aggressor dragging or overpowering a vulnerable person",
+      "own_anchor_similarity": 0.371014803647995,
+      "best_other_anchor_class": "Robbery",
+      "best_other_anchor_similarity": 0.6014950275421143,
+      "anchor_margin": -0.23048022389411926,
+      "nearest_anchor_class": "Robbery",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 1,
+      "class_name": "Abuse",
+      "prompt_index": 0,
+      "prompt_text": "a vulnerable victim enduring repeated close range mistreatment",
+      "own_anchor_similarity": 0.48178237676620483,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.7094905376434326,
+      "anchor_margin": -0.22770816087722778,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 7,
+      "class_name": "Fighting",
+      "prompt_index": 4,
+      "prompt_text": "two sides clashing back and forth in public",
+      "own_anchor_similarity": 0.3697131872177124,
+      "best_other_anchor_class": "Robbery",
+      "best_other_anchor_similarity": 0.5953568816184998,
+      "anchor_margin": -0.22564369440078735,
+      "nearest_anchor_class": "Robbery",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 13,
+      "class_name": "Vandalism",
+      "prompt_index": 2,
+      "prompt_text": "a person breaking glass with repeated tool impacts",
+      "own_anchor_similarity": 0.30170971155166626,
+      "best_other_anchor_class": "Normal",
+      "best_other_anchor_similarity": 0.5260855555534363,
+      "anchor_margin": -0.22437584400177002,
+      "nearest_anchor_class": "Normal",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 1,
+      "class_name": "Abuse",
+      "prompt_index": 2,
+      "prompt_text": "a helpless person recoiling from sustained physical abuse",
+      "own_anchor_similarity": 0.3284485340118408,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.5525992512702942,
+      "anchor_margin": -0.22415071725845337,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 1,
+      "class_name": "Abuse",
+      "prompt_index": 1,
+      "prompt_text": "a stronger aggressor controlling a weaker victim indoors",
+      "own_anchor_similarity": 0.4173803925514221,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6385527849197388,
+      "anchor_margin": -0.22117239236831665,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    }
+  ],
+  "lowest_centroid_anchor_margins": [
+    {
+      "class_index": 0,
+      "class_name": "Normal",
+      "own_anchor_similarity": 0.206193745136261,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6698644757270813,
+      "anchor_margin": -0.4636707305908203,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 10,
+      "class_name": "Shooting",
+      "own_anchor_similarity": 0.2865622043609619,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.5796294808387756,
+      "anchor_margin": -0.2930672764778137,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 1,
+      "class_name": "Abuse",
+      "own_anchor_similarity": 0.4351288676261902,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6622664928436279,
+      "anchor_margin": -0.22713762521743774,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 4,
+      "class_name": "Assault",
+      "own_anchor_similarity": 0.40974247455596924,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6307604312896729,
+      "anchor_margin": -0.2210179567337036,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 3,
+      "class_name": "Arson",
+      "own_anchor_similarity": 0.44211727380752563,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.631659746170044,
+      "anchor_margin": -0.1895424723625183,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 12,
+      "class_name": "Stealing",
+      "own_anchor_similarity": 0.5175896883010864,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.700154185295105,
+      "anchor_margin": -0.18256449699401855,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 7,
+      "class_name": "Fighting",
+      "own_anchor_similarity": 0.4381321966648102,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6065371632575989,
+      "anchor_margin": -0.1684049665927887,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 6,
+      "class_name": "Explosion",
+      "own_anchor_similarity": 0.4658287763595581,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.609345555305481,
+      "anchor_margin": -0.14351677894592285,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 13,
+      "class_name": "Vandalism",
+      "own_anchor_similarity": 0.4978116750717163,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.600913405418396,
+      "anchor_margin": -0.10310173034667969,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 5,
+      "class_name": "Burglary",
+      "own_anchor_similarity": 0.5469973683357239,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6410282850265503,
+      "anchor_margin": -0.09403091669082642,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 9,
+      "class_name": "Robbery",
+      "own_anchor_similarity": 0.6110910177230835,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6837707757949829,
+      "anchor_margin": -0.07267975807189941,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 8,
+      "class_name": "RoadAccidents",
+      "own_anchor_similarity": 0.6314906477928162,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6327928900718689,
+      "anchor_margin": -0.0013022422790527344,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": false
+    },
+    {
+      "class_index": 2,
+      "class_name": "Arrest",
+      "own_anchor_similarity": 0.651653528213501,
+      "best_other_anchor_class": "Shoplifting",
+      "best_other_anchor_similarity": 0.6314535140991211,
+      "anchor_margin": 0.020200014114379883,
+      "nearest_anchor_class": "Arrest",
+      "nearest_anchor_is_own": true
+    },
+    {
+      "class_index": 11,
+      "class_name": "Shoplifting",
+      "own_anchor_similarity": 0.658832848072052,
+      "best_other_anchor_class": "Robbery",
+      "best_other_anchor_similarity": 0.5800127983093262,
+      "anchor_margin": 0.07882004976272583,
+      "nearest_anchor_class": "Shoplifting",
+      "nearest_anchor_is_own": true
+    }
+  ],
+  "top_prompt_centroid_class_overlaps": [
+    {
+      "class_a": "Assault",
+      "class_b": "Fighting",
+      "similarity": 0.9604653716087341
+    },
+    {
+      "class_a": "Robbery",
+      "class_b": "Stealing",
+      "similarity": 0.9602468609809875
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Assault",
+      "similarity": 0.9542909860610962
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Vandalism",
+      "similarity": 0.9468035697937012
+    },
+    {
+      "class_a": "Arson",
+      "class_b": "Explosion",
+      "similarity": 0.9454809427261353
+    },
+    {
+      "class_a": "Assault",
+      "class_b": "Vandalism",
+      "similarity": 0.9454391002655029
+    },
+    {
+      "class_a": "Explosion",
+      "class_b": "Vandalism",
+      "similarity": 0.9451758861541748
+    },
+    {
+      "class_a": "Burglary",
+      "class_b": "Vandalism",
+      "similarity": 0.9445599317550659
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Fighting",
+      "similarity": 0.9346768856048584
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Burglary",
+      "similarity": 0.9335727095603943
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Explosion",
+      "similarity": 0.9332228899002075
+    },
+    {
+      "class_a": "Shooting",
+      "class_b": "Vandalism",
+      "similarity": 0.9322501420974731
+    },
+    {
+      "class_a": "Assault",
+      "class_b": "Burglary",
+      "similarity": 0.9297932982444763
+    },
+    {
+      "class_a": "Fighting",
+      "class_b": "Vandalism",
+      "similarity": 0.9282422661781311
+    },
+    {
+      "class_a": "Arson",
+      "class_b": "Vandalism",
+      "similarity": 0.9255470037460327
+    },
+    {
+      "class_a": "Assault",
+      "class_b": "Shooting",
+      "similarity": 0.9251750707626343
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Arson",
+      "similarity": 0.9247860908508301
+    },
+    {
+      "class_a": "Assault",
+      "class_b": "Explosion",
+      "similarity": 0.9222105741500854
+    },
+    {
+      "class_a": "Explosion",
+      "class_b": "Fighting",
+      "similarity": 0.9171766042709351
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Stealing",
+      "similarity": 0.9171246290206909
+    },
+    {
+      "class_a": "Burglary",
+      "class_b": "Shooting",
+      "similarity": 0.9160336256027222
+    },
+    {
+      "class_a": "Burglary",
+      "class_b": "Stealing",
+      "similarity": 0.9152337908744812
+    },
+    {
+      "class_a": "Abuse",
+      "class_b": "Shooting",
+      "similarity": 0.9139349460601807
+    },
+    {
+      "class_a": "Explosion",
+      "class_b": "Shooting",
+      "similarity": 0.9125930070877075
+    },
+    {
+      "class_a": "Burglary",
+      "class_b": "Explosion",
+      "similarity": 0.9117395877838135
+    }
+  ]
+}

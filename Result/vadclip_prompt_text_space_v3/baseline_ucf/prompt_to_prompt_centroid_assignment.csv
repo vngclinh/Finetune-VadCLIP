@@ -1,0 +1,71 @@
+class_index,class_name,prompt_index,prompt_text,own_centroid_similarity,best_other_centroid_class,best_other_centroid_similarity,centroid_margin,nearest_centroid_class,nearest_centroid_is_own
+12,Stealing,4,a thief quietly removing property from public space,0.7641885280609131,Vandalism,0.9128462672233582,-0.14865773916244507,Vandalism,False
+13,Vandalism,1,a suspect spraying graffiti directly onto public property,0.6712750196456909,Robbery,0.8062682151794434,-0.13499319553375244,Robbery,False
+9,Robbery,2,an attacker cornering a victim and seizing items,0.8243343830108643,Assault,0.9244126081466675,-0.10007822513580322,Assault,False
+7,Fighting,1,multiple participants striking each other during mutual combat,0.7574526071548462,Arrest,0.8372367024421692,-0.079784095287323,Arrest,False
+9,Robbery,3,a person brandishing a weapon to demand property,0.8533358573913574,Vandalism,0.9216904044151306,-0.0683545470237732,Vandalism,False
+0,Normal,4,people entering and exiting buildings at normal pace,0.8646848797798157,Burglary,0.9058428406715393,-0.04115796089172363,Burglary,False
+9,Robbery,4,a robber confronting a victim before taking belongings,0.8520854711532593,Arrest,0.8764612674713135,-0.0243757963180542,Arrest,False
+10,Shooting,2,a shooter raising a gun before firing,0.7913591265678406,Robbery,0.8113802671432495,-0.020021140575408936,Robbery,False
+4,Assault,3,a victim stumbling backward after a sudden hit,0.8816173076629639,Robbery,0.8974632620811462,-0.015845954418182373,Robbery,False
+5,Burglary,0,an intruder forcing entry through a locked doorway,0.9132857322692871,Vandalism,0.9255683422088623,-0.012282609939575195,Vandalism,False
+8,RoadAccidents,3,vehicles swerving before colliding in traffic,0.9074692726135254,Abuse,0.9150732755661011,-0.007604002952575684,Abuse,False
+3,Arson,4,a person retreating as planted fire starts spreading,0.9221662878990173,Explosion,0.9294717907905579,-0.007305502891540527,Explosion,False
+7,Fighting,4,two sides clashing back and forth in public,0.9353008270263672,Explosion,0.9405769109725952,-0.005276083946228027,Explosion,False
+11,Shoplifting,1,a person hiding a retail item while browsing shelves,0.8872555494308472,Vandalism,0.8858550786972046,0.0014004707336425781,Shoplifting,True
+3,Arson,3,small flames expanding after deliberate human ignition,0.9472178220748901,Explosion,0.9450139403343201,0.0022038817405700684,Arson,True
+13,Vandalism,3,someone striking fixtures until visible damage appears,0.9428951740264893,Explosion,0.9388703107833862,0.004024863243103027,Vandalism,True
+4,Assault,1,a one-sided attack with punches and defensive movement,0.9464815258979797,Fighting,0.9423923492431641,0.004089176654815674,Assault,True
+12,Stealing,2,a suspect carrying property while the owner is distracted,0.8974708318710327,Arrest,0.8849523067474365,0.012518525123596191,Stealing,True
+4,Assault,2,an aggressor kicking a fallen victim on pavement,0.9435324668884277,Fighting,0.9294298887252808,0.014102578163146973,Assault,True
+7,Fighting,0,two groups mutually exchanging punches in a brawl,0.9112808704376221,Vandalism,0.895999550819397,0.015281319618225098,Fighting,True
+13,Vandalism,4,a person deliberately damaging property with tools or kicks,0.9547586441040039,Abuse,0.9357432126998901,0.01901543140411377,Vandalism,True
+1,Abuse,4,an aggressor dragging or overpowering a vulnerable person,0.9689396619796753,Assault,0.9473281502723694,0.021611511707305908,Abuse,True
+6,Explosion,3,a concentrated blast throwing debris radially outward,0.9593020677566528,Vandalism,0.9376722574234009,0.021629810333251953,Explosion,True
+1,Abuse,2,a helpless person recoiling from sustained physical abuse,0.9559097290039062,Vandalism,0.9313940405845642,0.02451568841934204,Abuse,True
+6,Explosion,4,a sudden pressure wave following a visible detonation,0.9424548149108887,Arson,0.9151148796081543,0.027339935302734375,Explosion,True
+7,Fighting,2,opponents separating and reengaging in group fighting,0.9409776926040649,Vandalism,0.9115774631500244,0.029400229454040527,Fighting,True
+10,Shooting,4,an armed shooter discharging a weapon toward people,0.9494799375534058,Vandalism,0.920057475566864,0.029422461986541748,Shooting,True
+5,Burglary,4,an intruder entering rooms after damaging an entry point,0.9166138768196106,Robbery,0.8866019248962402,0.03001195192337036,Burglary,True
+5,Burglary,3,a person climbing through a window into private space,0.8922380208969116,Stealing,0.8595345616340637,0.0327034592628479,Burglary,True
+5,Burglary,2,a masked intruder breaking into a closed building,0.9390042424201965,Vandalism,0.9041715264320374,0.03483271598815918,Burglary,True
+1,Abuse,1,a stronger aggressor controlling a weaker victim indoors,0.9745548963546753,Assault,0.938805878162384,0.03574901819229126,Abuse,True
+13,Vandalism,0,a person smashing a window or door with force,0.9414504766464233,Explosion,0.9046797156333923,0.036770761013031006,Vandalism,True
+6,Explosion,1,a shockwave pushing fragments outward within seconds,0.9606910347938538,Abuse,0.9238401055335999,0.036850929260253906,Explosion,True
+12,Stealing,3,a person pocketing an unattended item and changing direction,0.9395467042922974,Robbery,0.9015510678291321,0.03799563646316528,Stealing,True
+9,Robbery,1,a victim handing belongings under close range intimidation,0.9164638519287109,Stealing,0.8784156441688538,0.03804820775985718,Robbery,True
+12,Stealing,0,a person taking unattended property and leaving quickly,0.954052209854126,Robbery,0.9155272841453552,0.03852492570877075,Stealing,True
+13,Vandalism,2,a person breaking glass with repeated tool impacts,0.9085078835487366,Explosion,0.8695558309555054,0.0389520525932312,Vandalism,True
+12,Stealing,1,"a thief grabbing a bicycle, bag, phone, or object",0.9271134734153748,Abuse,0.8873689770698547,0.03974449634552002,Stealing,True
+1,Abuse,0,a vulnerable victim enduring repeated close range mistreatment,0.9587348103523254,Stealing,0.9183084964752197,0.04042631387710571,Abuse,True
+6,Explosion,0,an instant detonation expanding from a blast center,0.9344965815544128,Vandalism,0.8912323117256165,0.04326426982879639,Explosion,True
+3,Arson,2,a lighter touching a surface before ignition begins,0.9552697539329529,Explosion,0.9112059473991394,0.04406380653381348,Arson,True
+4,Assault,4,an attacker chasing one target while striking repeatedly,0.9623541831970215,Fighting,0.9174164533615112,0.044937729835510254,Assault,True
+3,Arson,0,a person lighting flammable material before flames spread,0.8909045457839966,Stealing,0.8441907167434692,0.046713829040527344,Arson,True
+10,Shooting,0,an armed person aiming and firing a firearm,0.9285765290260315,Vandalism,0.8815252780914307,0.04705125093460083,Shooting,True
+9,Robbery,0,a threatening person forcing a victim to surrender valuables,0.9511061906814575,Stealing,0.9035214185714722,0.04758477210998535,Robbery,True
+0,Normal,2,vehicles moving steadily through regular traffic,0.8870633244514465,RoadAccidents,0.8365083932876587,0.05055493116378784,Normal,True
+0,Normal,1,people waiting and talking in a public area,0.9121967554092407,Stealing,0.8611636161804199,0.0510331392288208,Normal,True
+1,Abuse,3,a defenseless victim shielding from repeated aggressive contact,0.9625906944274902,Stealing,0.9093667268753052,0.05322396755218506,Abuse,True
+10,Shooting,1,a visible muzzle flash from a discharged gun,0.9215514659881592,Explosion,0.8679103255271912,0.05364114046096802,Shooting,True
+5,Burglary,1,a person prying a lock before entering property,0.9457285404205322,Vandalism,0.8920636177062988,0.0536649227142334,Burglary,True
+4,Assault,0,a single attacker lunging with a direct strike,0.9527573585510254,Fighting,0.8985240459442139,0.05423331260681152,Assault,True
+10,Shooting,3,a person firing a handgun in surveillance footage,0.9568691253662109,Vandalism,0.9019088745117188,0.05496025085449219,Shooting,True
+6,Explosion,2,a structure bursting apart from explosive force,0.9493138790130615,Arson,0.8935936689376831,0.05572021007537842,Explosion,True
+7,Fighting,3,several combatants grappling and swinging simultaneously,0.903183102607727,Assault,0.8370321393013,0.066150963306427,Fighting,True
+8,RoadAccidents,1,a car striking a pedestrian or cyclist on road,0.9359614253044128,Stealing,0.8697483539581299,0.06621307134628296,RoadAccidents,True
+11,Shoplifting,4,a customer exiting retail space with concealed merchandise,0.8947001695632935,Stealing,0.8247885704040527,0.06991159915924072,Shoplifting,True
+3,Arson,1,a person pouring accelerant before visible fire grows,0.953202486038208,Explosion,0.8677660226821899,0.08543646335601807,Arson,True
+11,Shoplifting,0,a shopper concealing merchandise inside clothing or bag,0.9573192000389099,Stealing,0.8716731071472168,0.08564609289169312,Shoplifting,True
+0,Normal,0,pedestrians walking calmly along an ordinary street,0.928496778011322,RoadAccidents,0.8382797241210938,0.09021705389022827,Normal,True
+2,Arrest,3,law enforcement securing a suspect during formal custody,0.9164847135543823,Robbery,0.8159171938896179,0.1005675196647644,Arrest,True
+2,Arrest,4,a detained person kneeling while officers apply restraints,0.9367780685424805,Robbery,0.8184844851493835,0.11829358339309692,Arrest,True
+8,RoadAccidents,2,a motorbike sliding across a lane after collision,0.9084687232971191,Stealing,0.7898083329200745,0.11866039037704468,RoadAccidents,True
+8,RoadAccidents,0,a vehicle collision causing roadway impact and disruption,0.9088261127471924,Normal,0.7890250086784363,0.1198011040687561,RoadAccidents,True
+11,Shoplifting,2,store goods disappearing beneath a jacket while shopping,0.9451815485954285,Stealing,0.8197404146194458,0.12544113397598267,Shoplifting,True
+2,Arrest,2,a handcuffed suspect standing between multiple police officers,0.9594374895095825,Robbery,0.8284913301467896,0.13094615936279297,Arrest,True
+8,RoadAccidents,4,a crashed vehicle blocking lanes after impact,0.9274295568466187,Normal,0.794028639793396,0.13340091705322266,RoadAccidents,True
+11,Shoplifting,3,a shopper slipping merchandise into a bag in aisle,0.9285629391670227,Stealing,0.7733277082443237,0.15523523092269897,Shoplifting,True
+2,Arrest,0,uniformed police placing handcuffs on a detained suspect,0.9650144577026367,Robbery,0.8035532236099243,0.1614612340927124,Arrest,True
+0,Normal,3,customers standing calmly near store counters,0.8059272766113281,Arrest,0.6273626089096069,0.1785646677017212,Normal,True
+2,Arrest,1,officers escorting a handcuffed person toward a patrol car,0.8987360000610352,Robbery,0.6814335584640503,0.21730244159698486,Arrest,True

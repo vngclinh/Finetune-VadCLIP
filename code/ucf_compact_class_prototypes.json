@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "source": "Manually compacted from ucf_class_description_prototypes_vadclip_train.json",
+    "purpose": "Short class-level semantic anchors for VadCLIP prototype experiments",
+    "selection_mode": "vadclip_train_list",
+    "prototype_levels": [
+      "keyword_phrase",
+      "compact_action_phrase",
+      "short_visual_sentence"
+    ],
+    "word_count_targets": {
+      "keyword_phrase": "3-7 words",
+      "compact_action_phrase": "8-12 words",
+      "short_visual_sentence": "12-18 words"
+    },
+    "notes": [
+      "Prototype text avoids explicit UCF-Crime class labels where practical.",
+      "The goal is to reduce semantic dilution from long descriptive prototypes.",
+      "These prototypes are intended as compact text anchors, not full video descriptions."
+    ]
+  },
+  "classes": {
+    "Abuse": {
+      "num_source_descriptions": 48,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "repeated force against vulnerable targets"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "harsh grabbing striking or restraining of a weaker target"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "A dominant person repeatedly uses force while the target struggles or cannot withdraw."
+        }
+      ]
+    },
+    "Arrest": {
+      "num_source_descriptions": 44,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "officer restraint and removal"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "uniformed officers restrain search and escort a person"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "Officers physically control a person, secure their movement, and guide them away."
+        }
+      ]
+    },
+    "Arson": {
+      "num_source_descriptions": 41,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "deliberate ignition of property"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "a person applies fire to fuel or property"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "Someone ignites a surface or object, then moves away as flames spread."
+        }
+      ]
+    },
+    "Assault": {
+      "num_source_descriptions": 45,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "close physical attack"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "people strike push grab or pin another person"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "A confrontation turns into repeated force, causing someone to fall or retreat."
+        }
+      ]
+    },
+    "Burglary": {
+      "num_source_descriptions": 87,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "forced entry and property removal"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "people break into a place and carry items away"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "Intruders force access, search inside rooms, gather objects, and leave quickly together."
+        }
+      ]
+    },
+    "Explosion": {
+      "num_source_descriptions": 29,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "sudden fireball and smoke"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "an object ignites with flames smoke and debris"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "A vehicle or object erupts suddenly, producing flames, smoke, and scattered debris."
+        }
+      ]
+    },
+    "Fighting": {
+      "num_source_descriptions": 45,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "mutual group physical struggle"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "people exchange blows grapple and shove each other"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "Two or more people engage in back-and-forth striking, pushing, or grappling movement."
+        }
+      ]
+    },
+    "Normal": {
+      "num_source_descriptions": 763,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "routine everyday activity"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "people move interact work or travel without disruption"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "People and vehicles continue ordinary behavior without visible conflict or sudden disruption."
+        }
+      ]
+    },
+    "RoadAccidents": {
+      "num_source_descriptions": 125,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "vehicle collision and impact"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "vehicles collide skid overturn or strike people in traffic"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "Traffic movement abruptly turns into impact, loss of control, or people falling."
+        }
+      ]
+    },
+    "Robbery": {
+      "num_source_descriptions": 143,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "coerced taking of valuables"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "threatening people to surrender cash or personal belongings"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "A person uses threat or force to make others hand over property."
+        }
+      ]
+    },
+    "Shooting": {
+      "num_source_descriptions": 27,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "gunfire and people reacting"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "a person aims or fires while others flee"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "An armed person points or fires, causing nearby people to scatter or fall."
+        }
+      ]
+    },
+    "Shoplifting": {
+      "num_source_descriptions": 29,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "concealed merchandise departure"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "a shopper hides items and moves toward exit"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "Someone handles store goods, conceals selected items, and leaves the retail area."
+        }
+      ]
+    },
+    "Stealing": {
+      "num_source_descriptions": 95,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "unauthorized taking of property"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "a person secretly takes unattended belongings and leaves"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "Someone approaches unattended property, removes it discreetly, and departs with it quickly."
+        }
+      ]
+    },
+    "Vandalism": {
+      "num_source_descriptions": 44,
+      "compact_prototypes": [
+        {
+          "type": "keyword_phrase",
+          "text": "intentional damage to property"
+        },
+        {
+          "type": "compact_action_phrase",
+          "text": "people strike break spray or damage public objects"
+        },
+        {
+          "type": "short_visual_sentence",
+          "text": "A person deliberately damages vehicles, walls, windows, or objects before moving away."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "name": "manual_clip_friendly_10_prompts_per_class_v2",
+    "dataset": "UCF-Crime",
+    "classes": 14,
+    "prompts_per_class": 10,
+    "language": "English",
+    "style": "CLIP-friendly surveillance caption prompts with reduced class confusion.",
+    "created_by": "manual_codex_generation",
+    "source": "Rewritten from manual_caption_10x using manual prompt diagnostics.",
+    "notes": [
+      "This version keeps 10 prompts per class and the same JSON schema as v1.",
+      "Fighting, Arrest, Explosion, Arson, Vandalism, and Normal were rewritten most heavily.",
+      "Prompts avoid relying on negation and emphasize discriminative visual cues."
+    ]
+  },
+  "classes": {
+    "Abuse": [
+      "a surveillance frame of an aggressor striking a vulnerable victim",
+      "a person forcefully pushing a helpless victim against furniture",
+      "a dominant person grabbing and controlling a weaker victim",
+      "a victim shielding their body from repeated physical mistreatment",
+      "an attacker cornering someone and delivering forceful blows",
+      "a person dragging a resisting victim across the floor",
+      "a vulnerable person recoiling from sustained aggressive contact",
+      "a stronger aggressor overpowering a weaker person indoors",
+      "a victim collapsing after repeated blows from another person",
+      "a hostile person hurting a defenseless target at close range"
+    ],
+    "Arrest": [
+      "uniformed police placing handcuffs on a detained suspect",
+      "officers escorting a handcuffed person toward a patrol car",
+      "law enforcement surrounding a suspect beside a police vehicle",
+      "a detained suspect kneeling while officers secure handcuffs",
+      "police guiding a restrained person during formal detention",
+      "uniformed officers searching a suspect beside a patrol car",
+      "a handcuffed suspect standing between multiple police officers",
+      "officers controlling a detainee during a roadside arrest",
+      "a patrol team moving a suspect into police custody",
+      "law enforcement securing wrists of a compliant detained person"
+    ],
+    "Arson": [
+      "a person deliberately igniting material near a property entrance",
+      "a suspicious individual using a lighter on a flammable surface",
+      "a small flame spreading gradually after human ignition",
+      "a person pouring accelerant before fire begins growing",
+      "deliberate fire starting near property without an explosive blast",
+      "a person crouching near combustible material before flames appear",
+      "a slow fire growing after someone lights an object",
+      "a suspicious person leaving as a small fire spreads",
+      "visible accelerant or lighter use before property begins burning",
+      "human ignition causing flames to spread across property"
+    ],
+    "Assault": [
+      "an attacker lunging toward a victim with a forceful strike",
+      "a close range attack with punches, kicks, and defense",
+      "a victim shielding their face during a rapid attack",
+      "an aggressor swinging arms repeatedly at another person",
+      "a person punching a victim during a one-sided confrontation",
+      "an attacker kicking a fallen victim on the ground",
+      "a victim stumbling backward after a direct body hit",
+      "an aggressor pursuing a target while continuing to strike",
+      "a person shoving an opponent hard enough to lose balance",
+      "a victim recoiling from repeated close range hits"
+    ],
+    "Burglary": [
+      "a surveillance frame of an intruder forcing a doorway",
+      "a person prying a lock to enter a restricted room",
+      "a masked intruder breaking a barrier into private property",
+      "a suspect searching drawers and shelves after unauthorized entry",
+      "an intruder exiting through a damaged entry point",
+      "a person climbing through a window into closed property",
+      "a suspicious person slipping inside after a doorway opens",
+      "a burglar moving quietly through a room collecting valuables",
+      "a person damaging a lock to access an interior space",
+      "an intruder exiting a building with bags or electronics"
+    ],
+    "Explosion": [
+      "an instant blast wave with fireball and flying fragments",
+      "a sudden detonation producing shockwave and expanding smoke plume",
+      "a bright flash followed by rapid explosive pressure burst",
+      "an object erupting violently with an outward debris cloud",
+      "a large fireball appearing immediately after explosive detonation",
+      "a shockwave pushing smoke and fragments away from impact",
+      "a violent pressure burst scattering debris in every direction",
+      "a sudden explosive plume rising from a detonation point",
+      "a rapid blast creating flash, shockwave, and airborne debris",
+      "a concentrated detonation expanding outward within seconds"
+    ],
+    "Fighting": [
+      "two groups mutually exchanging punches in a crowded brawl",
+      "several participants striking each other during mutual combat",
+      "opponents separating and reengaging repeatedly in a group fight",
+      "multiple people wrestling and swinging arms at each other",
+      "a crowd circling two sides fighting each other",
+      "several combatants pushing, grappling, and striking simultaneously",
+      "two sides clashing back and forth in public space",
+      "multiple participants falling and rejoining a chaotic brawl",
+      "people on both sides trading blows in close quarters",
+      "a mutual street fight with several active combatants"
+    ],
+    "Normal": [
+      "pedestrians walking calmly along a quiet street",
+      "people chatting casually in an ordinary public area",
+      "vehicles moving normally through regular traffic flow",
+      "shoppers browsing shelves and paying at checkout",
+      "workers performing routine tasks in a calm store",
+      "pedestrians crossing a walkway with regular spacing",
+      "people entering and exiting buildings at a steady pace",
+      "a public area with ordinary walking and waiting",
+      "people standing calmly near counters and doorways",
+      "an orderly scene with predictable everyday activity"
+    ],
+    "RoadAccidents": [
+      "a vehicle collision causing impact, debris, and disruption",
+      "a car striking a pedestrian or cyclist on the road",
+      "a motorbike sliding across a lane after a crash",
+      "vehicles swerving and colliding during a sudden accident",
+      "a pedestrian knocked down by a vehicle near a crossing",
+      "a damaged vehicle stopped and blocking the roadway",
+      "a rider thrown onto pavement after a high speed impact",
+      "a traffic accident with a vehicle spinning to a halt",
+      "a car hitting an obstacle with sudden debris",
+      "a motorbike rider falling during an intersection collision"
+    ],
+    "Robbery": [
+      "a threatening person forcing a victim to surrender valuables",
+      "an aggressor confronting someone and taking a purse or wallet",
+      "a victim handing over belongings under close range intimidation",
+      "a robber snatching property and escaping quickly",
+      "a person threatening a clerk and demanding money",
+      "an attacker cornering a victim and seizing personal items",
+      "a coerced handover of valuables during visible intimidation",
+      "a suspect taking valuables while the victim backs away",
+      "a person brandishing a weapon to demand property",
+      "a robber approaching a victim and leaving with belongings"
+    ],
+    "Shooting": [
+      "an armed person aiming a firearm and firing shots",
+      "a gunman pointing a weapon as people scatter",
+      "a muzzle flash appearing as a shooter targets someone",
+      "a person firing a handgun and causing panic",
+      "an armed attacker discharging a weapon in public",
+      "a victim falling after a nearby firearm is fired",
+      "a shooter raising a gun while a crowd runs",
+      "a gunfire scene with fear and rapid dispersal",
+      "a person aiming a rifle or handgun at a target",
+      "an armed shooter firing as people flee the scene"
+    ],
+    "Shoplifting": [
+      "a shopper concealing merchandise inside clothing or a bag",
+      "a person removing a store item without checkout",
+      "a customer hiding a product and exiting an aisle",
+      "a shopper slipping goods into a bag while browsing",
+      "a person scanning surroundings before pocketing merchandise",
+      "someone carrying an unpaid item past the cashier",
+      "concealed goods disappearing beneath a jacket in a store",
+      "a customer hiding one item while handling shelf products",
+      "a shopper leaving a store with concealed unpaid merchandise",
+      "a retail theft scene with discreet concealment and exit"
+    ],
+    "Stealing": [
+      "a person taking unattended property and leaving quickly",
+      "a thief grabbing a bicycle, bag, phone, or object",
+      "a suspect approaching a valuable item and carrying it away",
+      "unattended belongings disappearing after suspicious human contact",
+      "a person lifting property while the owner is distracted",
+      "a thief cutting a lock and taking a bicycle",
+      "a suspect removing a package or bag from public space",
+      "a person pocketing an unattended item and changing direction",
+      "a thief quietly taking property during owner distraction",
+      "a thief carrying stolen property away from the scene"
+    ],
+    "Vandalism": [
+      "a person smashing a window or door with force",
+      "someone kicking a fixture until visible pieces break",
+      "a suspect spraying graffiti onto a wall with a can",
+      "a person breaking glass with repeated tool impacts",
+      "a vandal throwing an object at a storefront or car",
+      "someone striking public property until visible damage appears",
+      "a person scratching and denting a parked vehicle",
+      "a person painting graffiti directly onto public property",
+      "a suspect repeatedly hitting a fixture until it breaks",
+      "a person deliberately damaging property without taking anything"
+    ]
+  }
+}

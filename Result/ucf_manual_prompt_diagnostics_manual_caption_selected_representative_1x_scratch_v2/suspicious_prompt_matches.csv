@@ -1,0 +1,15 @@
+class_name,prompt_index,prompt_text,own_class_similarity,best_other_class,best_other_similarity,other_minus_own,nearest_same_class_prompt_similarity
+Arrest,0,arrest a person being arrested by uniformed police officers,0.9999998807907104,Assault,0.855880081653595,-0.14411979913711548,nan
+Assault,0,assault an attacker swinging arms repeatedly at another person,1.000000238418579,Arrest,0.855880081653595,-0.14412015676498413,nan
+Shooting,0,shooting a shooting incident involving a visible gun,1.0,Assault,0.8511106371879578,-0.14888936281204224,nan
+Fighting,0,fighting a public fight where both sides are physically attacking,1.0,Assault,0.8484699726104736,-0.15153002738952637,nan
+Burglary,0,burglary a person illegally entering a building to steal property,1.0,Robbery,0.8471470475196838,-0.15285295248031616,nan
+Robbery,0,robbery a threatening person demanding valuables from a victim,1.0,Burglary,0.8471469879150391,-0.15285301208496094,nan
+Abuse,0,abuse a vulnerable victim enduring repeated close range mistreatment,1.0000001192092896,Assault,0.841219961643219,-0.15878015756607056,nan
+RoadAccidents,0,roadAccidents a vehicle collision causing roadway impact and disruption,1.0,Vandalism,0.7894576787948608,-0.21054232120513916,nan
+Vandalism,0,vandalism someone striking public property until visible damage appears,1.0000001192092896,RoadAccidents,0.7894576787948608,-0.2105424404144287,nan
+Arson,0,arson a person lighting material before flames spread,0.9999999403953552,Shooting,0.7856900691986084,-0.21430987119674683,nan
+Explosion,0,explosion a powerful blast destroying an object or structure,0.9999999403953552,Shooting,0.7742903232574463,-0.22570961713790894,nan
+Shoplifting,0,shoplifting a person secretly taking merchandise from a store without paying,1.0,Burglary,0.7716035842895508,-0.22839641571044922,nan
+Stealing,0,stealing a person secretly stealing an unattended object,1.0,Shoplifting,0.7535857558250427,-0.24641424417495728,nan
+Normal,0,normal an orderly scene with predictable everyday human activity,1.0,Stealing,0.38778525590896606,-0.6122147440910339,nan

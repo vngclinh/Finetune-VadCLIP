@@ -1,0 +1,71 @@
+class_index,class_name,prompt_index,prompt_text,own_anchor_similarity,best_other_anchor_class,best_other_anchor_similarity,anchor_margin,nearest_anchor_class,nearest_anchor_is_own
+0,Normal,2,vehicles moving steadily through regular traffic,0.10375995934009552,RoadAccidents,0.6423755288124084,-0.5386155843734741,RoadAccidents,False
+0,Normal,3,customers standing calmly near store counters,0.03286730498075485,Shoplifting,0.5062278509140015,-0.473360538482666,Shoplifting,False
+0,Normal,0,pedestrians walking calmly along an ordinary street,0.1571684628725052,RoadAccidents,0.617699921131134,-0.46053147315979004,RoadAccidents,False
+0,Normal,1,people waiting and talking in a public area,0.26340270042419434,Shoplifting,0.6477024555206299,-0.38429975509643555,Shoplifting,False
+10,Shooting,0,an armed person aiming and firing a firearm,0.11471207439899445,Normal,0.48286110162734985,-0.3681490421295166,Normal,False
+10,Shooting,4,an armed shooter discharging a weapon toward people,0.1984747052192688,Robbery,0.531447172164917,-0.3329724669456482,Robbery,False
+10,Shooting,3,a person firing a handgun in surveillance footage,0.27728843688964844,Shoplifting,0.5899099111557007,-0.31262147426605225,Shoplifting,False
+10,Shooting,1,a visible muzzle flash from a discharged gun,0.19942788779735565,Robbery,0.49342912435531616,-0.2940012216567993,Robbery,False
+0,Normal,4,people entering and exiting buildings at normal pace,0.3497177064418793,Shoplifting,0.6147438287734985,-0.26502612233161926,Shoplifting,False
+7,Fighting,0,two groups mutually exchanging punches in a brawl,0.2468322217464447,Normal,0.5042197108268738,-0.2573874890804291,Normal,False
+4,Assault,2,an aggressor kicking a fallen victim on pavement,0.2808631360530853,Robbery,0.5373497605323792,-0.2564866244792938,Robbery,False
+4,Assault,4,an attacker chasing one target while striking repeatedly,0.3482535183429718,Shoplifting,0.5889190435409546,-0.2406655251979828,Shoplifting,False
+7,Fighting,2,opponents separating and reengaging in group fighting,0.2594454288482666,Normal,0.49427172541618347,-0.23482629656791687,Normal,False
+1,Abuse,4,an aggressor dragging or overpowering a vulnerable person,0.371014803647995,Robbery,0.6014950275421143,-0.23048022389411926,Robbery,False
+1,Abuse,0,a vulnerable victim enduring repeated close range mistreatment,0.48178237676620483,Shoplifting,0.7094905376434326,-0.22770816087722778,Shoplifting,False
+7,Fighting,4,two sides clashing back and forth in public,0.3697131872177124,Robbery,0.5953568816184998,-0.22564369440078735,Robbery,False
+1,Abuse,2,a helpless person recoiling from sustained physical abuse,0.3284485340118408,Shoplifting,0.5525992512702942,-0.22415071725845337,Shoplifting,False
+1,Abuse,1,a stronger aggressor controlling a weaker victim indoors,0.4173803925514221,Shoplifting,0.6385527849197388,-0.22117239236831665,Shoplifting,False
+4,Assault,0,a single attacker lunging with a direct strike,0.3443080186843872,Shoplifting,0.5623481273651123,-0.2180401086807251,Shoplifting,False
+3,Arson,3,small flames expanding after deliberate human ignition,0.3885640799999237,Robbery,0.6054646968841553,-0.21690061688423157,Robbery,False
+3,Arson,1,a person pouring accelerant before fire grows,0.3685383200645447,Shoplifting,0.5833083391189575,-0.21477001905441284,Shoplifting,False
+6,Explosion,2,an object rupturing outward in a single instant,0.3382015526294708,Robbery,0.5488255620002747,-0.21062400937080383,Robbery,False
+1,Abuse,3,a defenseless victim shielding from repeated aggressive contact,0.4990123212337494,Shoplifting,0.7021421194076538,-0.20312979817390442,Shoplifting,False
+12,Stealing,1,a thief lifting a phone or package from public space,0.49217501282691956,Shoplifting,0.693831205368042,-0.20165619254112244,Shoplifting,False
+3,Arson,4,a person retreating as planted fire begins spreading,0.3303854763507843,Shoplifting,0.5319499969482422,-0.20156452059745789,Shoplifting,False
+12,Stealing,2,a suspect carrying property while the owner is distracted,0.48182740807533264,Shoplifting,0.6735984086990356,-0.191771000623703,Shoplifting,False
+12,Stealing,3,a person pocketing an unattended item and walking away,0.505923867225647,Shoplifting,0.6971093416213989,-0.19118547439575195,Shoplifting,False
+4,Assault,1,a one-sided attack with punches and defensive movement,0.41685107350349426,Robbery,0.6033220291137695,-0.18647095561027527,Robbery,False
+6,Explosion,4,a pressure blast expanding faster than surrounding motion,0.34634387493133545,Robbery,0.5305166840553284,-0.18417280912399292,Robbery,False
+6,Explosion,0,a blast center expanding into a radial debris cloud,0.36255791783332825,Robbery,0.5420015454292297,-0.1794436275959015,Robbery,False
+3,Arson,2,a lighter touching a surface before ignition starts,0.3827977776527405,Shoplifting,0.5581488013267517,-0.17535102367401123,Shoplifting,False
+6,Explosion,1,a sudden shock front spreading from one point,0.4761636257171631,Robbery,0.6475224494934082,-0.17135882377624512,Robbery,False
+12,Stealing,0,a person taking an unattended bag and leaving,0.4751482605934143,Shoplifting,0.6438984870910645,-0.16875022649765015,Shoplifting,False
+4,Assault,3,a victim stumbling backward after a sudden hit,0.5300817489624023,Shoplifting,0.6881870031356812,-0.1581052541732788,Shoplifting,False
+3,Arson,0,a person lighting material before flames spread,0.4973214268684387,Shoplifting,0.6455404758453369,-0.1482190489768982,Shoplifting,False
+13,Vandalism,2,a person repeatedly kicking a public fixture,0.3742261528968811,Robbery,0.5163428783416748,-0.1421167254447937,Robbery,False
+6,Explosion,3,a compact detonation producing outward airborne fragments,0.5077025294303894,Shoplifting,0.6460554003715515,-0.1383528709411621,Shoplifting,False
+5,Burglary,2,a masked intruder entering a closed building interior,0.5500062704086304,Shoplifting,0.6828519105911255,-0.13284564018249512,Shoplifting,False
+5,Burglary,4,an intruder searching inside rooms after unauthorized entry,0.5680427551269531,Shoplifting,0.6972657442092896,-0.12922298908233643,Shoplifting,False
+5,Burglary,3,a person climbing through a window into private space,0.5718499422073364,Shoplifting,0.693668782711029,-0.12181884050369263,Shoplifting,False
+10,Shooting,2,a shooter raising a gun before firing,0.5133346319198608,Shoplifting,0.6292415261268616,-0.11590689420700073,Shoplifting,False
+7,Fighting,3,several combatants grappling and swinging simultaneously,0.45669984817504883,Shoplifting,0.5708792805671692,-0.11417943239212036,Shoplifting,False
+13,Vandalism,1,someone scratching a parked vehicle with a tool,0.42850595712661743,Shoplifting,0.5375975370407104,-0.10909157991409302,Shoplifting,False
+12,Stealing,4,a thief removing a bicycle after handling its lock,0.3832206130027771,Shoplifting,0.4907086491584778,-0.10748803615570068,Shoplifting,False
+5,Burglary,1,a person prying open access to a restricted room,0.44928526878356934,Robbery,0.5526522397994995,-0.10336697101593018,Robbery,False
+9,Robbery,2,a robber confronting someone and taking personal items,0.5938591957092285,Shoplifting,0.6926892995834351,-0.09883010387420654,Shoplifting,False
+9,Robbery,1,a victim handing belongings during close intimidation,0.5155835747718811,Shoplifting,0.6086916923522949,-0.09310811758041382,Shoplifting,False
+8,RoadAccidents,3,vehicles swerving before colliding in traffic,0.539043664932251,Shoplifting,0.6268236041069031,-0.0877799391746521,Shoplifting,False
+5,Burglary,0,an intruder manipulating a lock at a doorway,0.595852792263031,Shoplifting,0.6754775047302246,-0.0796247124671936,Shoplifting,False
+9,Robbery,0,a threatening person demanding valuables from a victim,0.5256285667419434,Shoplifting,0.5997546315193176,-0.07412606477737427,Shoplifting,False
+13,Vandalism,3,a vandal hitting a sign until it bends,0.6302847862243652,Shoplifting,0.7037289142608643,-0.07344412803649902,Shoplifting,False
+13,Vandalism,0,a person spraying paint across a wall surface,0.5312543511390686,Shoplifting,0.6004603505134583,-0.06920599937438965,Shoplifting,False
+13,Vandalism,4,a person marking property with deliberate graffiti strokes,0.5487933158874512,Shoplifting,0.6083825826644897,-0.059589266777038574,Shoplifting,False
+7,Fighting,1,multiple participants striking each other during mutual combat,0.6162069439888,Shoplifting,0.6570898294448853,-0.040882885456085205,Shoplifting,False
+2,Arrest,3,law enforcement securing a suspect during formal custody,0.6100320219993591,Shoplifting,0.6391812562942505,-0.029149234294891357,Shoplifting,False
+9,Robbery,3,a weapon used to force a property handover,0.5310428142547607,Shoplifting,0.5583062767982483,-0.02726346254348755,Shoplifting,False
+2,Arrest,4,a detained person kneeling while officers apply restraints,0.5302358269691467,Shoplifting,0.557386040687561,-0.027150213718414307,Shoplifting,False
+9,Robbery,4,a victim backing away while valuables are taken,0.580544650554657,Shoplifting,0.6025625467300415,-0.02201789617538452,Shoplifting,False
+8,RoadAccidents,1,a car striking a pedestrian or cyclist on road,0.6092758178710938,Shoplifting,0.6077029705047607,0.0015728473663330078,RoadAccidents,True
+8,RoadAccidents,2,a motorbike sliding across a lane after collision,0.5214672088623047,Shoplifting,0.5147991180419922,0.0066680908203125,RoadAccidents,True
+2,Arrest,2,a handcuffed suspect standing between multiple police officers,0.6092926263809204,Shoplifting,0.5962562561035156,0.013036370277404785,Arrest,True
+11,Shoplifting,1,a person hiding a retail item while browsing shelves,0.4915733337402344,Normal,0.47790005803108215,0.013673275709152222,Shoplifting,True
+2,Arrest,0,uniformed police placing handcuffs on a detained suspect,0.6267595291137695,RoadAccidents,0.6128643155097961,0.013895213603973389,Arrest,True
+8,RoadAccidents,0,vehicles colliding at an intersection on the roadway,0.7615569829940796,Arrest,0.7387003302574158,0.02285665273666382,RoadAccidents,True
+8,RoadAccidents,4,a crashed vehicle blocking lanes after roadway impact,0.6162797808647156,Shoplifting,0.5905618667602539,0.02571791410446167,RoadAccidents,True
+2,Arrest,1,officers escorting a handcuffed person toward a patrol car,0.6711055636405945,RoadAccidents,0.6190019845962524,0.05210357904434204,Arrest,True
+11,Shoplifting,2,store goods disappearing beneath a jacket while shopping,0.6312946081161499,Robbery,0.5789487957954407,0.05234581232070923,Shoplifting,True
+11,Shoplifting,0,a shopper concealing merchandise inside clothing or bag,0.6857632398605347,Robbery,0.608295202255249,0.07746803760528564,Shoplifting,True
+11,Shoplifting,3,a shopper slipping merchandise into a bag in aisle,0.5526363849639893,Robbery,0.46351584792137146,0.0891205370426178,Shoplifting,True
+11,Shoplifting,4,a customer exiting retail space with concealed merchandise,0.6779413223266602,RoadAccidents,0.5684054493904114,0.10953587293624878,Shoplifting,True

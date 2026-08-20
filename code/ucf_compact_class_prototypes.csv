@@ -1,0 +1,43 @@
+class_name,prototype_type,prototype_text,num_source_descriptions
+Abuse,keyword_phrase,repeated force against vulnerable targets,48
+Abuse,compact_action_phrase,harsh grabbing striking or restraining of a weaker target,48
+Abuse,short_visual_sentence,"A dominant person repeatedly uses force while the target struggles or cannot withdraw.",48
+Arrest,keyword_phrase,officer restraint and removal,44
+Arrest,compact_action_phrase,uniformed officers restrain search and escort a person,44
+Arrest,short_visual_sentence,"Officers physically control a person, secure their movement, and guide them away.",44
+Arson,keyword_phrase,deliberate ignition of property,41
+Arson,compact_action_phrase,a person applies fire to fuel or property,41
+Arson,short_visual_sentence,"Someone ignites a surface or object, then moves away as flames spread.",41
+Assault,keyword_phrase,close physical attack,45
+Assault,compact_action_phrase,people strike push grab or pin another person,45
+Assault,short_visual_sentence,"A confrontation turns into repeated force, causing someone to fall or retreat.",45
+Burglary,keyword_phrase,forced entry and property removal,87
+Burglary,compact_action_phrase,people break into a place and carry items away,87
+Burglary,short_visual_sentence,"Intruders force access, search inside rooms, gather objects, and leave quickly together.",87
+Explosion,keyword_phrase,sudden fireball and smoke,29
+Explosion,compact_action_phrase,an object ignites with flames smoke and debris,29
+Explosion,short_visual_sentence,"A vehicle or object erupts suddenly, producing flames, smoke, and scattered debris.",29
+Fighting,keyword_phrase,mutual group physical struggle,45
+Fighting,compact_action_phrase,people exchange blows grapple and shove each other,45
+Fighting,short_visual_sentence,"Two or more people engage in back-and-forth striking, pushing, or grappling movement.",45
+Normal,keyword_phrase,routine everyday activity,763
+Normal,compact_action_phrase,people move interact work or travel without disruption,763
+Normal,short_visual_sentence,"People and vehicles continue ordinary behavior without visible conflict or sudden disruption.",763
+RoadAccidents,keyword_phrase,vehicle collision and impact,125
+RoadAccidents,compact_action_phrase,vehicles collide skid overturn or strike people in traffic,125
+RoadAccidents,short_visual_sentence,"Traffic movement abruptly turns into impact, loss of control, or people falling.",125
+Robbery,keyword_phrase,coerced taking of valuables,143
+Robbery,compact_action_phrase,threatening people to surrender cash or personal belongings,143
+Robbery,short_visual_sentence,"A person uses threat or force to make others hand over property.",143
+Shooting,keyword_phrase,gunfire and people reacting,27
+Shooting,compact_action_phrase,a person aims or fires while others flee,27
+Shooting,short_visual_sentence,"An armed person points or fires, causing nearby people to scatter or fall.",27
+Shoplifting,keyword_phrase,concealed merchandise departure,29
+Shoplifting,compact_action_phrase,a shopper hides items and moves toward exit,29
+Shoplifting,short_visual_sentence,"Someone handles store goods, conceals selected items, and leaves the retail area.",29
+Stealing,keyword_phrase,unauthorized taking of property,95
+Stealing,compact_action_phrase,a person secretly takes unattended belongings and leaves,95
+Stealing,short_visual_sentence,"Someone approaches unattended property, removes it discreetly, and departs with it quickly.",95
+Vandalism,keyword_phrase,intentional damage to property,44
+Vandalism,compact_action_phrase,people strike break spray or damage public objects,44
+Vandalism,short_visual_sentence,"A person deliberately damages vehicles, walls, windows, or objects before moving away.",44
