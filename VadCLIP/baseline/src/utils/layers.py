@@ -168,25 +168,15 @@ class DistanceAdj(Module):
         super(DistanceAdj, self).__init__()
         self.sigma = Parameter(FloatTensor(1))
         self.sigma.data.fill_(0.1)
-        # Plain attributes, not registered buffers: the state_dict must keep its original
-        # keys so existing checkpoints still load with strict=True.
-        self._cache_key = None
-        self._cached_dist = None
 
     def forward(self, batch_size, max_seqlen):
-        # The [max_seqlen, max_seqlen] proximity matrix is a constant, so it is built once
-        # per (length, device) and broadcast instead of being recomputed and repeated on
-        # every forward pass. Values are unchanged; this only saves time and memory.
-        device = self.sigma.device
-        cache_key = (int(max_seqlen), device)
-        if self._cache_key != cache_key:
-            arith = np.arange(max_seqlen).reshape(-1, 1)
-            dist = pdist(arith, metric='cityblock').astype(np.float32)
-            dist = torch.from_numpy(squareform(dist)).to(device)
-            dist = torch.exp(-dist / torch.exp(torch.tensor(1., device=device)))
-            self._cached_dist = torch.unsqueeze(dist, 0)
-            self._cache_key = cache_key
-        return self._cached_dist.expand(batch_size, -1, -1)
+        # To support batch operations
+        self.arith = np.arange(max_seqlen).reshape(-1, 1)
+        dist = pdist(self.arith, metric='cityblock').astype(np.float32)
+        self.dist = torch.from_numpy(squareform(dist)).to('cuda')
+        self.dist = torch.exp(-self.dist / torch.exp(torch.tensor(1.)))
+        self.dist = torch.unsqueeze(self.dist, 0).repeat(batch_size, 1, 1).to('cuda')
+        return self.dist
     
 if __name__ == '__main__':
     d = DistanceAdj()
