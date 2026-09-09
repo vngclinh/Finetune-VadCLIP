@@ -106,8 +106,23 @@ parser.add_argument("--target-oversample", default=1.0, type=float,
 
 # --- Checkpoints ---------------------------------------------------------------------
 parser.add_argument("--pretrained-model-path", default="model/model_ucf.pth",
-                    help="theta': the converged stage-1 model. Required; stage 2 makes no sense "
+                    help="theta': the converged stage-1 model. Required unless "
+                         "--use-pretrained-model false; stage-2 fine-tuning makes no sense "
                          "without a source model to anchor to.")
+parser.add_argument(
+    "--use-pretrained-model",
+    default=True,
+    type=str2bool,
+    help="true (the default) loads --pretrained-model-path, which is what stage 2 means: "
+         "fine-tune a converged model. false leaves the VadCLIP-specific layers at their "
+         "random initialisation and trains them from scratch on top of the frozen CLIP "
+         "encoder, matching --use-pretrained-model false in src/ucf_train_augment.py. "
+         "From scratch there is no theta' to consolidate towards, so --regularizer must "
+         "be 'none', and the stage-2 schedule no longer applies: use the baseline's "
+         "--max-epoch 10 --lr 2e-5 --scheduler-milestones 4 8 --grad-clip 0 instead of "
+         "one epoch at 2e-6. A number produced this way is NOT comparable with the "
+         "stage-2 runs, which all started from a model that was already at 88.02.",
+)
 parser.add_argument("--output-model-path", default="model/model_ucf_rescale_ewc.pth")
 parser.add_argument("--checkpoint-path", default="model/checkpoint_rescale_ewc.pth")
 parser.add_argument("--save-cur-path", default="model/model_cur_rescale_ewc.pth")

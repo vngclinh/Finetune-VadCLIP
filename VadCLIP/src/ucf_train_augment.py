@@ -10,11 +10,32 @@ and adds a consistency term that asks the two views to agree on the overlapping 
 """
 
 import os
+import sys
 
 # Must be set before torch initialises cuBLAS, otherwise --deterministic cannot make
-# matmul reductions reproducible. Harmless when --deterministic is off. Same line, same
-# reason, as baseline/src/ucf_train.py.
-os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
+# matmul reductions reproducible, so it cannot wait for argparse. Read straight off argv
+# instead, and only set it when this run actually asked for determinism.
+#
+# It used to be set unconditionally, on the grounds that it is harmless with
+# --deterministic off. That is true of correctness but not of arithmetic: the variable
+# caps the cuBLAS workspace, which narrows the set of GEMM kernels cuBLAS may pick, which
+# can change reduction order and hence the low bits of every matmul. Every run before
+# 2026-09-06 -- the round-1 control that scored 88.13 included -- ran without it, so
+# setting it by default quietly puts new runs on a different numerical footing from the
+# numbers they are compared against.
+def _determinism_requested(argv):
+    """--deterministic true / --deterministic=true, read before torch is imported."""
+    truthy = ("1", "true", "t", "yes", "y")
+    for index, argument in enumerate(argv):
+        if argument == "--deterministic" and index + 1 < len(argv):
+            return argv[index + 1].lower() in truthy
+        if argument.startswith("--deterministic="):
+            return argument.split("=", 1)[1].lower() in truthy
+    return False
+
+
+if _determinism_requested(sys.argv[1:]):
+    os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import csv
 import random

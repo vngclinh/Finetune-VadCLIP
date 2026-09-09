@@ -74,8 +74,20 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
     gtlabels = np.load(args.gt_label_path, allow_pickle=True)
     video_meta = read_video_meta(args.test_list)
 
-    load_source_weights(model, args.pretrained_model_path, device)
-    print("Loaded source model theta':", args.pretrained_model_path)
+    if args.use_pretrained_model:
+        load_source_weights(model, args.pretrained_model_path, device)
+        print("Loaded source model theta':", args.pretrained_model_path)
+    else:
+        # Same starting point as src/ucf_train_augment.py with --use-pretrained-model
+        # false: the CLIP encoder keeps its released weights and stays frozen, every
+        # VadCLIP-specific layer starts from its random initialisation.
+        print("Training VadCLIP-specific layers from scratch (CLIP weights only).")
+        if args.regularizer != "none" and (args.lambda_reg != 0 or args.lambda_auto > 0):
+            raise SystemExit(
+                "--regularizer " + args.regularizer + " needs a source model to pull back "
+                "towards, but --use-pretrained-model is false, so there is no theta'. "
+                "Pass --regularizer none, or drop --use-pretrained-model false."
+            )
 
     prompt_text = get_prompt_text(label_map)
     target_classes = set(args.target_classes)
