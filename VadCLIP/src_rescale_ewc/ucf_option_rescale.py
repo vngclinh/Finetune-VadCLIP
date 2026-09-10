@@ -9,6 +9,8 @@ model.
 
 import argparse
 
+import adaptive_weights
+
 
 def str2bool(value):
     if isinstance(value, bool):
@@ -72,13 +74,60 @@ parser.add_argument("--target-classes", default=DEFAULT_TARGET_CLASSES, nargs="+
 parser.add_argument("--mu", default=1.0, type=float,
                     help="Rescaling factor. 1.0 disables rescaling. Useful range here is 2-10; the "
                          "paper's 100-10000 suits unbounded CTC losses, not these O(1) losses.")
-parser.add_argument("--rescale-mode", default="class", choices=["off", "video", "class"],
+parser.add_argument("--rescale-mode", default="class",
+                    choices=["off", "video", "class", "adaptive_class"],
                     help="'video' = Eq. (1), scale the whole per-video loss of target videos. "
                          "'class' = Eq. (10)-(11), scale only the gradient reaching the target "
-                         "classes' A-branch logits, leaving the loss value and the C branch alone.")
+                         "classes' A-branch logits, leaving the loss value and the C branch alone. "
+                         "'adaptive_class' = the same gradient-level mechanism, but with a "
+                         "per-class weight read from --class-weight-file instead of one shared "
+                         "--mu over a hand-picked target set. --mu and --target-classes then have "
+                         "no effect on the rescaling; --target-classes still selects which classes "
+                         "the report calls 'target'.")
 parser.add_argument("--rescale-normalize", default="none", choices=["none", "mean"],
                     help="'none' averages the rescaled losses over the batch, as Eq. (1) does, so "
                          "the gradient scale grows with mu. 'mean' divides by sum(w) instead.")
+
+# --- Adaptive class weights (--rescale-mode adaptive_class) ---------------------------
+# Produced by ucf_train_difficulty.py from the train set only. Splitting the two steps is
+# deliberate: the weight vector is an artefact you can print, diff and put in the paper,
+# and every training run then reads the same frozen file instead of recomputing something
+# that might drift.
+parser.add_argument("--class-weight-file", default="",
+                    help="JSON written by ucf_train_difficulty.py. Required by "
+                         "--rescale-mode adaptive_class, ignored by every other mode.")
+parser.add_argument("--adaptive-alpha", default=adaptive_weights.DEFAULT_ALPHA, type=float,
+                    help="Stretch: weights span 1 to 1 + alpha. ucf_train_difficulty.py only.")
+parser.add_argument("--adaptive-w-max", default=adaptive_weights.DEFAULT_W_MAX, type=float,
+                    help="Hard cap on any single weight. At alpha 6 it never binds; it is "
+                         "there so a larger alpha cannot silently reproduce the 12x gradients "
+                         "that made the from-scratch runs diverge.")
+parser.add_argument("--adaptive-beta", default=adaptive_weights.DEFAULT_BETA, type=float,
+                    help="Mix of the two train-set signals: 1.0 difficulty only, 0.0 frequency "
+                         "only, 0.5 both. This is the ablation axis of the experiment.")
+parser.add_argument("--adaptive-frequency-power", default=adaptive_weights.DEFAULT_FREQUENCY_POWER,
+                    type=float,
+                    help="p in (median_count / count)^p, before rank-normalisation. Since ranks "
+                         "follow, any p > 0 gives the same ordering; it is kept as a knob only "
+                         "so the raw column in the report can be read on a familiar scale.")
+parser.add_argument("--difficulty-source", default="clasm_loss",
+                    choices=["clasm_loss", "clas2_loss", "alignment_margin", "classifier_gap"],
+                    help="Which train-set measurement becomes the difficulty score. "
+                         "'clasm_loss' is the A-branch loss the rescaling actually acts on. "
+                         "'alignment_margin' is negated first, so a small margin reads as hard.")
+
+# --- ucf_train_difficulty.py only ------------------------------------------------------
+parser.add_argument("--difficulty-output", default="model/adaptive_weights.json",
+                    help="Where the weight vector is written.")
+parser.add_argument("--difficulty-csv", default="",
+                    help="Optional per-class statistics table, for the report.")
+parser.add_argument("--difficulty-max-batches", default=0, type=int,
+                    help="Stop after N batches. Smoke test only; 0 reads the whole train list.")
+parser.add_argument("--from-statistics", default="",
+                    help="Recompute weights from a weight file written earlier instead of "
+                         "measuring the model again. alpha/beta/w-max/frequency-power only "
+                         "affect the arithmetic that follows the measurement, so the whole "
+                         "beta ablation comes out of one forward pass over the train set.")
 
 # --- Weight consolidation, Eq. (12) and Eq. (13) -------------------------------------
 parser.add_argument("--regularizer", default="ewc", choices=["none", "l2", "ewc"])

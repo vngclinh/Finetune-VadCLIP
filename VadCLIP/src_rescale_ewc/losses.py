@@ -50,6 +50,35 @@ def build_class_scale(prompt_text, label_map, target_classes, mu, device):
     return scale
 
 
+def build_class_scale_from_weights(prompt_text, label_map, weights_by_class, device, default=1.0):
+    """The adaptive counterpart of ``build_class_scale``: a different multiplier per class.
+
+    ``build_class_scale`` writes one shared ``mu`` onto the hand-picked target columns;
+    this writes ``weights_by_class[c]`` onto every column it names. The tensor it returns
+    has the same shape and meaning, so ``ScaleClassGrad`` needs no change -- its backward
+    was already a per-column multiply.
+
+    A class named in ``weights_by_class`` that this label map does not have is an error
+    rather than a shrug: it means the weight file was computed against a different class
+    set, and quietly ignoring it would run an experiment nobody described.
+    """
+    scale = torch.full((len(prompt_text),), float(default), dtype=torch.float32, device=device)
+    for raw_label, weight in weights_by_class.items():
+        if raw_label not in label_map:
+            raise KeyError(f"Weighted class {raw_label!r} is not in the label map.")
+        prompt = label_map[raw_label]
+        if prompt not in prompt_text:
+            raise KeyError(f"Prompt {prompt!r} for weighted class {raw_label!r} is not in prompt_text.")
+        scale[prompt_text.index(prompt)] = float(weight)
+
+    unweighted = [raw_label for raw_label in label_map if raw_label not in weights_by_class]
+    if unweighted:
+        raise KeyError(f"No weight given for {sorted(unweighted)}. The weight file must "
+                       f"cover every class in the label map, so that a missing entry cannot "
+                       f"pass as a deliberate 1.0.")
+    return scale
+
+
 class ScaleClassGrad(torch.autograd.Function):
     """Identity forward, per-column gradient rescaling backward.
 
@@ -97,8 +126,12 @@ def _reduce(per_video, weights, normalize):
 # from ucf_train.py. The only change is that the final reduction is per-video first, so a
 # weight can be applied before averaging.
 
-def CLAS2(logits, labels, lengths, device, weights=None, normalize="none"):
-    """C-branch binary MIL loss. ``weights=None`` reproduces ``ucf_train.CLAS2`` exactly."""
+def clas2_per_video(logits, labels, lengths, device):
+    """The C branch's per-video BCE, before any reduction, plus the MIL score itself.
+
+    Split out of ``CLAS2`` so ``ucf_train_difficulty.py`` measures the same number the
+    trainer optimises rather than a lookalike written a second time.
+    """
     instance_logits = torch.zeros(0).to(device)
     targets = 1 - labels[:, 0].reshape(labels.shape[0])
     targets = targets.to(device)
@@ -108,8 +141,36 @@ def CLAS2(logits, labels, lengths, device, weights=None, normalize="none"):
         top, _ = torch.topk(probabilities[i, 0:lengths[i]], k=int(lengths[i] / 16 + 1), largest=True)
         instance_logits = torch.cat([instance_logits, torch.mean(top).view(1)], dim=0)
 
-    per_video = F.binary_cross_entropy(instance_logits, targets, reduction="none")
+    return F.binary_cross_entropy(instance_logits, targets, reduction="none"), instance_logits, targets
+
+
+def CLAS2(logits, labels, lengths, device, weights=None, normalize="none"):
+    """C-branch binary MIL loss. ``weights=None`` reproduces ``ucf_train.CLAS2`` exactly."""
+    per_video, _, _ = clas2_per_video(logits, labels, lengths, device)
     return _reduce(per_video, weights, normalize)
+
+
+def clasm_per_video(logits, labels, lengths, device, class_scale=None):
+    """The A branch's per-video cross-entropy, before reduction, plus the class logits.
+
+    The returned ``instance_logits`` are the top-k-pooled per-class scores, which is what
+    an alignment margin has to be measured on -- the margin between the true class and its
+    strongest rival at the same pooling the loss uses.
+    """
+    instance_logits = torch.zeros(0).to(device)
+    normalized_labels = labels / torch.sum(labels, dim=1, keepdim=True)
+    normalized_labels = normalized_labels.to(device)
+
+    for i in range(logits.shape[0]):
+        top, _ = torch.topk(logits[i, 0:lengths[i]], k=int(lengths[i] / 16 + 1), largest=True, dim=0)
+        instance_logits = torch.cat([instance_logits, torch.mean(top, 0, keepdim=True)], dim=0)
+
+    scaled = instance_logits
+    if class_scale is not None:
+        scaled = ScaleClassGrad.apply(instance_logits, class_scale)
+
+    per_video = -torch.sum(normalized_labels * F.log_softmax(scaled, dim=1), dim=1)
+    return per_video, instance_logits
 
 
 def CLASM(logits, labels, lengths, device, weights=None, normalize="none", class_scale=None):
@@ -121,18 +182,7 @@ def CLASM(logits, labels, lengths, device, weights=None, normalize="none", class
 
     With both left at ``None`` this reproduces ``ucf_train.CLASM`` exactly.
     """
-    instance_logits = torch.zeros(0).to(device)
-    normalized_labels = labels / torch.sum(labels, dim=1, keepdim=True)
-    normalized_labels = normalized_labels.to(device)
-
-    for i in range(logits.shape[0]):
-        top, _ = torch.topk(logits[i, 0:lengths[i]], k=int(lengths[i] / 16 + 1), largest=True, dim=0)
-        instance_logits = torch.cat([instance_logits, torch.mean(top, 0, keepdim=True)], dim=0)
-
-    if class_scale is not None:
-        instance_logits = ScaleClassGrad.apply(instance_logits, class_scale)
-
-    per_video = -torch.sum(normalized_labels * F.log_softmax(instance_logits, dim=1), dim=1)
+    per_video, _ = clasm_per_video(logits, labels, lengths, device, class_scale)
     return _reduce(per_video, weights, normalize)
 
 

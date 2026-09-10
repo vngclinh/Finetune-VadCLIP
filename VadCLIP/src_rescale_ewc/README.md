@@ -22,6 +22,8 @@ the feature processing are byte-for-byte the ones the baseline uses.
 | File | Role |
 |---|---|
 | `losses.py` | Weighted `CLAS2`/`CLASM`, `ScaleClassGrad` (Eq. 10–11), `consolidation_penalty` (Eq. 12/13). No CLIP import |
+| `adaptive_weights.py` | The per-class weight formula: rank-normalised frequency and difficulty, mixed by `beta`. Pure stdlib |
+| `ucf_train_difficulty.py` | Measure per-class difficulty on the **train** set and write the weight vector |
 | `fisher.py` | Estimate / normalise / save / load the diagonal Fisher (Eq. 14). No CLIP import |
 | `dataset_rescale.py` | UCF feature dataset with `--feature-root` support and a `labels` property |
 | `evaluation.py` | One scoring pass → overall metrics + per-class AUC/AP + target vs non-target split |
@@ -30,6 +32,7 @@ the feature processing are byte-for-byte the ones the baseline uses.
 | `ucf_train_rescale.py` | The stage-2 trainer |
 | `ucf_eval_perclass.py` | Score several checkpoints and print the trade-off table |
 | `tests/test_losses.py` | 18 unit tests, CPU only, no CLIP needed |
+| `tests/test_adaptive_weights.py` | 25 unit tests for the weight formula and the vector gradient path |
 
 ## The objective
 
@@ -68,6 +71,50 @@ knowing before reading the logs:
 The C branch is left untouched in this mode. It has a single output channel, so "the
 target class' column" does not exist there; and the paper froze its attention decoder for
 the same reason — a rescaled branch cannot be balanced against an untouched one.
+
+### `--rescale-mode adaptive_class` — the same mechanism, a weight per class
+
+Same gradient surgery as `class`, but the multiplier is `w[c]` from a file rather than one
+shared `mu` over a hand-picked target set:
+
+```
+d L2 / d z[i, c]  <-  w[c] * d L2 / d z[i, c]      for every class c, for every video i
+```
+
+Two problems with the fixed form this fixes.
+
+**The target set was chosen on the test set.** `Explosion`, `RoadAccidents`, `Shooting`
+and `Shoplifting` are the four lowest-AUC classes *on test*, so the test set sits inside
+the design of the method. `w` is computed from the train set alone:
+
+```
+freq_c = (median_count / count_c) ** p    -> rank-normalise -> [0, 1]
+diff_c = source model's per-class loss    -> rank-normalise -> [0, 1]     (on train)
+w_c    = clip(1 + alpha * (beta * diff_c + (1 - beta) * freq_c), 1, w_max)
+```
+
+**One `mu` is a switch, not a dial.** `RoadAccidents` has 127 train videos and is still
+one of the weak classes; frequency alone cannot see that, and a shared `mu` cannot say
+"emphasise this one twice as much as that one".
+
+`beta` is the ablation axis: `1.0` difficulty only, `0.0` frequency only, `0.5` both.
+Three details that are load-bearing rather than cosmetic:
+
+* The mix is **additive**, over two signals already rank-normalised to `[0, 1]`. The
+  multiplicative form `1 + alpha * diff * freq` looks equivalent but is not: at
+  `beta = 0` it hands every class — `Normal` included — a weight of at least
+  `1 + alpha * min(freq)`, which is a global A-branch learning-rate change, not a
+  frequency ablation.
+* Ranks, **not** min-max. Min-max is set entirely by the two extreme classes, so one
+  outlier rescales everything.
+* `Normal` is **pinned to 1.0** and excluded from both rankings. Emphasising the normal
+  class is a different experiment and should not happen by accident through a formula.
+
+`--target-classes` still exists in this mode, but only to decide which classes the report
+aggregates as "target". It no longer steers anything the model sees — the trainer says so
+in its own log line.
+
+`--mu` is ignored here.
 
 ## Running it
 
@@ -134,6 +181,37 @@ python ucf_train_rescale.py $COMMON --rescale-mode class --mu 3 \
 Each run differs from `s2_ctrl` in exactly one thing. Without the control, any difference
 you measure could just be "three more epochs of training".
 
+### 3b. Adaptive weights
+
+One pass over the train set produces the measurements; every `beta` after that is
+arithmetic, so `--from-statistics` reuses them instead of re-running the model.
+
+```bash
+# measure once
+python ucf_train_difficulty.py \
+  --pretrained-model-path model/model_baseline_ctrl.pth \
+  --feature-root /path/to/UCFClipFeatures \
+  --train-list ../list/ucf_CLIP_rgb_relative.csv \
+  --adaptive-beta 0.5 \
+  --difficulty-output model/w_beta05.json \
+  --difficulty-csv model/difficulty.csv
+
+# the other two ablation arms, no GPU needed
+python ucf_train_difficulty.py --from-statistics model/w_beta05.json \
+  --adaptive-beta 0.0 --difficulty-output model/w_beta00.json
+python ucf_train_difficulty.py --from-statistics model/w_beta05.json \
+  --adaptive-beta 1.0 --difficulty-output model/w_beta10.json
+
+# then train
+python ucf_train_rescale.py $COMMON --rescale-mode adaptive_class \
+  --class-weight-file model/w_beta05.json --output-model-path model/s2_adaptive05.pth
+```
+
+Read the Spearman line the script prints before trusting the `beta` ablation. The source
+checkpoint was trained on this very train set, so a rare class got few gradient updates
+and keeps a high train loss; if `|rho|` is large, "difficulty" is mostly "frequency"
+restated and the two arms are not independent.
+
 ### 4. The trade-off table
 
 ```bash
@@ -152,32 +230,53 @@ Tables 3 and 4.
 | Option | Default | Note |
 |---|---|---|
 | `--mu` | `1.0` | Useful range **2–10**. The paper's 100–10000 suits an unbounded CTC loss, not these O(1) losses |
-| `--rescale-mode` | `class` | `off` / `video` / `class` |
+| `--rescale-mode` | `class` | `off` / `video` / `class` / `adaptive_class` |
+| `--class-weight-file` | — | Required by `adaptive_class`. Written by `ucf_train_difficulty.py` |
+| `--adaptive-alpha` | `6.0` | Weights span `1` to `1 + alpha` |
+| `--adaptive-beta` | `0.5` | `1.0` difficulty only, `0.0` frequency only. The ablation axis |
+| `--adaptive-w-max` | `8.0` | Guard rail; at alpha 6 it never binds |
+| `--difficulty-source` | `clasm_loss` | Which train-set measurement becomes difficulty |
 | `--regularizer` | `ewc` | `none` / `l2` (Eq. 12) / `ewc` (Eq. 13) |
 | `--lambda-auto` | `0` | Target `reg/task` ratio; `0.15` is a good ask |
 | `--lr` | `2e-6` | 10x below stage 1, following the paper's much smaller fine-tuning lr |
 | `--grad-clip` | `1.0` | The paper tightens clipping from 5 to 2 when rescaling |
 | `--max-epoch` | `3` | Stage 2 is a short nudge, not a retrain |
 | `--batch-size` | `64` | **Do not lower.** Paper section 5.4: a small batch can be all target samples, and the rescaled loss then explodes |
-| `--target-classes` | `Explosion RoadAccidents Shooting Shoplifting` | Lowest-AUC classes with >= 20 test videos. `Abuse` scores as badly but has only 2 test videos |
+| `--target-classes` | `Explosion RoadAccidents Shooting Shoplifting` | Lowest-AUC classes with >= 20 test videos. `Abuse` scores as badly but has only 2 test videos. Under `adaptive_class` this is a **reporting** grouping only |
 | `--target-oversample` | `1.0` | Counterpart of the paper's mixing ratio; off by default |
 
 ## Tests
 
 ```bash
-python tests/test_losses.py          # or: python -m pytest tests/test_losses.py -q
+python tests/test_losses.py             # or: python -m pytest tests/ -q
+python tests/test_adaptive_weights.py
 ```
 
-18 tests. The two that matter most assert that with `mu = 1` the losses here are
+43 tests. The two that matter most assert that with `mu = 1` the losses here are
 bit-for-bit `ucf_train.py`'s — otherwise every comparison is against a moved goalpost.
 The rest cover Eq. (1) arithmetic, Eq. (10)–(11) gradient scaling (including that it
 reaches non-target videos), Eq. (12)/(13), the exclusion of frozen CLIP parameters, and
 that Eq. (14) squares per sample rather than per batch, and that the Fisher statistics build their quantile levels on the input's own device and dtype.
 
+`test_adaptive_weights.py` adds the weight formula. Three of its tests are about the
+experiment rather than the code: that `beta = 0` leaves the commonest class at exactly
+`1.0` (the additive mix's reason to exist), that a common-but-hard class can be ranked
+high by difficulty and low by frequency (the case the method exists for), and that a
+per-class weight reaches the A-branch logits column by column, exactly.
+
 ## Status
 
 Verified end to end on CPU against a synthetic UCF-shaped fixture: Fisher estimation over
-12.6M trainable parameters, all three rescale modes, all three regularisers, lambda
+12.6M trainable parameters, all four rescale modes, all three regularisers, lambda
 auto-calibration, oversampling, mid-epoch and epoch-end evaluation, mAP, and the
-multi-checkpoint report. **No result on real UCF-Crime features yet** — that needs the
-GPU environment where the features and the stage-1 checkpoint live.
+multi-checkpoint report.
+
+The adaptive path was checked the same way, on a 14-class synthetic set: the difficulty
+pass, all four `--difficulty-source` values, the `beta` ablation via `--from-statistics`,
+and every failure path (no weight file, missing file, unreadable file, a weight file that
+does not cover every class). The control guarantee holds bit-for-bit — a weight file of
+all `1.0` produces byte-identical trained weights to `--rescale-mode off`, while
+`beta = 0.5` and `mu = 12` both diverge from it.
+
+**No result on real UCF-Crime features yet** — that needs the GPU environment where the
+features and the stage-1 checkpoint live.

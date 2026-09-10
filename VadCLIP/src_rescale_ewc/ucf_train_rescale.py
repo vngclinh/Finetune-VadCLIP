@@ -29,10 +29,12 @@ import _bootstrap  # noqa: F401  (registers VadCLIP/src on sys.path)
 import ucf_option_rescale
 from evaluation import append_metrics_csv, evaluate, format_summary, read_video_meta
 from fisher import load_fisher
+from adaptive_weights import load_class_weights
 from losses import (
     CLAS2,
     CLASM,
     build_class_scale,
+    build_class_scale_from_weights,
     build_video_weights,
     consolidation_penalty,
     consolidation_scale,
@@ -107,8 +109,18 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
     class_scale = None
     if args.rescale_mode == "class" and args.mu != 1.0:
         class_scale = build_class_scale(prompt_text, label_map, target_classes, args.mu, device)
+    elif args.rescale_mode == "adaptive_class":
+        class_weights, weight_meta = load_class_weights(args.class_weight_file)
+        class_scale = build_class_scale_from_weights(prompt_text, label_map, class_weights, device)
+        args.adaptive_beta_used = weight_meta.get("beta", "")
+        print(f"Adaptive weights from {args.class_weight_file} | {weight_meta}")
+        for raw_label, weight in sorted(class_weights.items(), key=lambda item: -item[1]):
+            print(f"    {raw_label:<16} {weight:.3f}")
     print(f"Rescaling: mode {args.rescale_mode} | mu {args.mu} | normalize {args.rescale_normalize}")
-    print(f"Target classes: {sorted(target_classes)}")
+    # In adaptive_class mode this set no longer steers the rescaling -- every class has its
+    # own weight -- but it still decides which classes the report aggregates as 'target'.
+    print(f"Target classes (reporting{'' if args.rescale_mode != 'adaptive_class' else ' only'}): "
+          f"{sorted(target_classes)}")
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
     scheduler = MultiStepLR(optimizer, args.scheduler_milestones, args.scheduler_rate)
@@ -253,6 +265,10 @@ def run_evaluation(model, testloader, args, prompt_text, gt, gtsegments, gtlabel
         append_metrics_csv(args.metrics_csv, {
             "run": args.run_tag, "epoch": epoch + 1, "step": global_step,
             "mu": args.mu, "rescale_mode": args.rescale_mode,
+            "class_weight_file": Path(args.class_weight_file).name if args.class_weight_file else "",
+            # From the weight file, not from --adaptive-beta: the run used whatever beta
+            # produced that file, and the flag on this command line may say something else.
+            "adaptive_beta": getattr(args, "adaptive_beta_used", ""),
             "regularizer": args.regularizer, "lambda_reg": args.lambda_reg,
             "lambda_used": round(lambda_reg, 8), "is_final": int(is_final),
             **{key: round(value, 4) for key, value in metrics.items()},
@@ -288,6 +304,20 @@ def main():
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     args = ucf_option_rescale.parser.parse_args()
+
+    # Checked before the model is built, which takes long enough that a typo found later
+    # costs a real wait -- and long enough that a silent fallback to no rescaling at all
+    # would be easy to miss in a log.
+    if args.rescale_mode == "adaptive_class":
+        if not args.class_weight_file:
+            raise SystemExit(
+                "--rescale-mode adaptive_class needs --class-weight-file. Produce one with:\n"
+                "  python ucf_train_difficulty.py --pretrained-model-path <theta'.pth> "
+                "--difficulty-output model/adaptive_weights.json"
+            )
+        if not Path(args.class_weight_file).exists():
+            raise SystemExit(f"--class-weight-file {args.class_weight_file} does not exist.")
+
     setup_seed(args.seed)
 
     label_map = ucf_option_rescale.UCF_LABEL_MAP
