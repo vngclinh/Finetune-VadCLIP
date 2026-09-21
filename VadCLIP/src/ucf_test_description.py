@@ -5,6 +5,16 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 from utils.tools import get_batch_mask
 from utils.ucf_detectionMAP import getDetectionMAP as dmAP
 
+# Every number the last ``test()`` call computed, keyed by an unambiguous name.
+#
+# ``test`` returns only the C-branch pair, because every existing caller unpacks exactly
+# two values. The A-branch pair and the five mAP thresholds were therefore printed and
+# then thrown away, which is why a sweep's metrics CSV ended up with a single column
+# called "auc" that a reader has to guess the meaning of. Callers that want the full set
+# read this dict straight after the call; the return value is unchanged, so nothing that
+# already works has to be touched.
+LAST_METRICS = {}
+
 
 def test(model, testdataloader, maxlen, prompt_text, gt, gtsegments, gtlabels, device):
     model.to(device)
@@ -80,5 +90,17 @@ def test(model, testdataloader, maxlen, prompt_text, gt, gtsegments, gtlabels, d
         average_map += dmap[i]
     average_map = average_map / (i + 1)
     print("average MAP: {:.2f}".format(average_map))
+
+    LAST_METRICS.clear()
+    LAST_METRICS.update({
+        # Named after the branch, not after the order they happen to be printed in.
+        # "AUC1" is the binary classifier head; "AUC2" is the visual-text alignment head.
+        "auc_branch_c": float(roc1),
+        "ap_branch_c": float(ap_score1),
+        "auc_branch_a": float(roc2),
+        "ap_branch_a": float(ap_score2),
+        "avg_map": float(average_map),
+        **{f"map_iou_{iou[j]:.1f}": float(dmap[j]) for j in range(5)},
+    })
 
     return roc1, ap_score1

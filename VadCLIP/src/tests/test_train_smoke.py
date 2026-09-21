@@ -486,6 +486,104 @@ def test_skip_shifted_view_refuses_a_live_lambda(root, list_path):
     print("  ok: --skip-shifted-view refuses to run with a live consistency term")
 
 
+def test_augment_task_loss_trains_on_the_shifted_view(root, list_path):
+    """--augment-task-loss must change the task loss, and only via the shifted view.
+
+    Two runs on the same seed and the same batches: with the flag off the first step's
+    loss1/loss2 come from the full view alone, with it on they are the average over both
+    views. Identical numbers would mean the flag is wired to nothing.
+    """
+    seen = {}
+
+    def capture(tag, augment):
+        args = build_args(root, list_path, augment_task_loss=augment,
+                          lambda_consistency=0.0, debug_max_steps=1,
+                          checkpoint_path=str(root / "model" / f"ckpt_{tag}.pth"),
+                          output_model_path=str(root / "model" / f"out_{tag}.pth"))
+        torch.manual_seed(7)
+        model = build_model(args)
+        normal_loader, anomaly_loader = build_loaders(args)
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            train(model, normal_loader, anomaly_loader, None, args, LABEL_MAP, "cpu")
+        line = next(l for l in buffer.getvalue().splitlines() if l.startswith("[step 0]"))
+        seen[tag] = {
+            part.split("=")[0]: float(part.split("=")[1])
+            for part in line.replace("[step 0] ", "").split()
+        }
+
+    capture("plain", False)
+    capture("augmented", True)
+    assert seen["plain"]["loss1"] != seen["augmented"]["loss1"], (
+        "--augment-task-loss left loss1 untouched, so the shifted view never entered it"
+    )
+    assert seen["plain"]["loss2"] != seen["augmented"]["loss2"], (
+        "--augment-task-loss left loss2 untouched"
+    )
+    # loss3 is text-only: the shifted view cannot reach it, so it must not move.
+    assert abs(seen["plain"]["loss3"] - seen["augmented"]["loss3"]) < 1e-9, (
+        "loss3 depends only on the text prompts and must be unaffected by the augmentation"
+    )
+
+    args = build_args(root, list_path, augment_task_loss=True, skip_shifted_view=True)
+    refused = False
+    try:
+        train(build_model(args), *build_loaders(args), None, args, LABEL_MAP, "cpu")
+    except ValueError as error:
+        refused = "--augment-task-loss" in str(error)
+    assert refused, "--augment-task-loss with --skip-shifted-view should refuse"
+    print("  ok: --augment-task-loss reaches loss1/loss2 only, and refuses the "
+          "single-view shortcut")
+
+
+def test_lambda_auto_grad_basis_solves_a_different_lambda(root, list_path):
+    """The gradient basis must produce a value, and not the loss basis's value.
+
+    Equal numbers would mean the new branch quietly fell through to the old one. The two
+    measure different things, so on any real model they disagree.
+    """
+    solved = {}
+    for basis in ("loss", "grad"):
+        metrics_csv = root / f"basis_{basis}.csv"
+        args = build_args(
+            root, list_path, lambda_auto=0.1, lambda_auto_basis=basis,
+            lambda_auto_steps=2, lambda_consistency=0.0, max_epoch=1,
+            select_metric="none", run_tag=f"basis_{basis}",
+            metrics_csv=str(metrics_csv),
+            checkpoint_path=str(root / "model" / f"ckpt_basis_{basis}.pth"),
+            output_model_path=str(root / "model" / f"out_basis_{basis}.pth"),
+        )
+
+        def fake_test(model, loader, maxlen, prompt_text, gt, gtsegments, gtlabels, device):
+            return 0.8, 0.3
+
+        import ucf_test_description
+        original = ucf_test_description.test
+        ucf_test_description.test = fake_test
+        try:
+            torch.manual_seed(11)
+            model = build_model(args)
+            normal_loader, anomaly_loader = build_loaders(args)
+            train(model, normal_loader, anomaly_loader, normal_loader, args, LABEL_MAP, "cpu")
+        finally:
+            ucf_test_description.test = original
+
+        with open(metrics_csv, encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+        assert rows, f"no metrics row for basis {basis}"
+        assert rows[-1]["lambda_auto_basis"] == basis, "the CSV does not record the basis"
+        assert rows[-1]["eval_kind"] == "epoch_end"
+        assert rows[-1]["auc_branch_c"] not in ("", None), "the C-branch column is empty"
+        solved[basis] = float(rows[-1]["lambda_used"])
+        assert solved[basis] > 0, f"the {basis} basis never solved for a lambda"
+
+    assert solved["loss"] != solved["grad"], (
+        f"both bases produced lambda={solved['loss']}, so 'grad' did not take its own path"
+    )
+    print(f"  ok: lambda-auto basis loss -> {solved['loss']:.4e}, "
+          f"grad -> {solved['grad']:.4e}")
+
+
 def main():
     print("test_train_smoke")
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -500,6 +598,8 @@ def main():
         test_lambda_recalibration_moves_and_is_capped(root, list_path)
         test_skip_shifted_view_matches_the_two_view_control(root, list_path)
         test_skip_shifted_view_refuses_a_live_lambda(root, list_path)
+        test_augment_task_loss_trains_on_the_shifted_view(root, list_path)
+        test_lambda_auto_grad_basis_solves_a_different_lambda(root, list_path)
     print("all smoke checks passed")
 
 

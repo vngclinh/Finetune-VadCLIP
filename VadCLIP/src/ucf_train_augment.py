@@ -38,6 +38,7 @@ if _determinism_requested(sys.argv[1:]):
     os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import csv
+import math
 import random
 from pathlib import Path
 
@@ -195,6 +196,42 @@ def append_metrics_csv(path, row):
             writer.writerow(row)
 
 
+def gradient_norm(loss, parameters):
+    """L2 norm of dloss/dtheta over ``parameters``, leaving the graph intact.
+
+    ``allow_unused`` is required: with --consistency-branch c the consistency term never
+    touches the learnable prompt tokens, so their gradient comes back as None rather than
+    as zeros. Nothing here calls ``backward``, so the caller's own backward pass is
+    unaffected beyond the cost of walking the graph again.
+    """
+    # A batch in which no video has an overlapping region makes the consistency loss a
+    # plain zero constant with no graph behind it, and autograd.grad refuses those. It is
+    # rare at offset 26 (3.91% of files individually, so a whole batch of 64 essentially
+    # never), but the caller retries on the next step rather than crashing on it.
+    if not loss.requires_grad:
+        return 0.0
+    parameters = [p for p in parameters if p.requires_grad]
+    grads = torch.autograd.grad(loss, parameters, retain_graph=True, allow_unused=True)
+    total = 0.0
+    for grad in grads:
+        if grad is not None:
+            total += float(grad.detach().pow(2).sum().item())
+    return math.sqrt(total)
+
+
+def cap_lambda_growth(solved, current, max_growth):
+    """Clamp one recalibration step to a multiplicative band around ``current``.
+
+    Holding a fixed share against a consistency loss that is being driven towards zero
+    asks for an unbounded lambda, so the controller needs a leash or it diverges.
+    ``max_growth <= 0`` removes the bound; ``current <= 0`` means there is nothing to
+    grow from yet, which is the first solve.
+    """
+    if max_growth <= 0 or current <= 0:
+        return solved
+    return min(max(solved, current / max_growth), current * max_growth)
+
+
 def load_checkpoint_dict(path, map_location=None):
     """Load a checkpoint written by this script.
 
@@ -235,7 +272,9 @@ def combined_consistency_loss(logits1_full, logits1_shift, logits2_full, logits2
 # --- Training ------------------------------------------------------------------------
 
 def train(model, normal_loader, anomaly_loader, testloader, args, label_map, device):
-    from ucf_test_description import test  # lazy: keeps the loss importable without CLIP
+    # Lazy: keeps the loss importable without CLIP. LAST_METRICS is mutated in place by
+    # test(), so binding it once here keeps seeing the current values.
+    from ucf_test_description import test, LAST_METRICS as test_metrics
 
     model.to(device)
 
@@ -248,6 +287,13 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
             "--skip-shifted-view drops the shifted view entirely, so the consistency term "
             "cannot be computed. It is only legal for the lambda-0 control. Got "
             f"--lambda-consistency {args.lambda_consistency} and --lambda-auto {args.lambda_auto}."
+        )
+
+    augment_task_loss = bool(args.augment_task_loss)
+    if single_view and augment_task_loss:
+        raise ValueError(
+            "--augment-task-loss trains on the shifted view, and --skip-shifted-view "
+            "never builds one. Pick one."
         )
 
     Path(args.checkpoint_path).parent.mkdir(parents=True, exist_ok=True)
@@ -270,12 +316,15 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
     prompt_text = get_prompt_text(label_map)
     ap_best = 0
     global_step = 0
+    best_selection = None
 
     print(
         "Shift-consistency config:",
         "| lambda_consistency:", args.lambda_consistency,
         "| lambda_auto:", args.lambda_auto,
+        "| lambda_auto_basis:", args.lambda_auto_basis,
         "| lambda_auto_recalibrate:", args.lambda_auto_recalibrate,
+        "| augment_task_loss:", augment_task_loss,
         "| shift_offset:", args.shift_offset,
         "| shift_ratio:", args.shift_ratio,
         "| shift_direction:", args.shift_direction,
@@ -296,11 +345,16 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
     lambda_base = args.lambda_consistency
     if args.lambda_auto > 0:
         lambda_base = 0.0
-        print(f"Lambda auto-calibration on: after {args.lambda_auto_steps} steps with the "
-              f"term switched off, lambda will be solved so that "
-              f"lambda*L_consistency / L_task = {args.lambda_auto}.")
+        quantity = ("loss values" if args.lambda_auto_basis == "loss"
+                    else "gradient norms")
+        print(f"Lambda auto-calibration on ({args.lambda_auto_basis} basis): after "
+              f"{args.lambda_auto_steps} steps with the term switched off, lambda will be "
+              f"solved so that the consistency term holds a share {args.lambda_auto} of "
+              f"the task objective, measured on {quantity}.")
         if args.lambda_auto_recalibrate:
-            print(f"Recalibration on: lambda is re-solved at the end of every epoch, "
+            when = ("at the end of every epoch" if args.lambda_auto_basis == "loss"
+                    else "on the first step of every epoch")
+            print(f"Recalibration on: lambda is re-solved {when}, "
                   f"moving by at most a factor of {args.lambda_auto_max_growth} each time "
                   f"({'no bound' if args.lambda_auto_max_growth <= 0 else 'bounded'}).")
 
@@ -360,9 +414,22 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
                 logits1_full, logits1_shift = logits1[:batch], logits1[batch:]
                 logits2_full, logits2_shift = logits2[:batch], logits2[batch:]
 
-            # The three original losses see the full view only, so labels stay clean.
+            # By default the three original losses see the full view only, so a video
+            # label can never be attached to a clip the shift has cut the event out of.
             loss1 = CLAS2(logits1_full, text_labels, len_full, device)
             loss2 = CLASM(logits2_full, text_labels, len_full, device)
+
+            # --augment-task-loss instead treats the shifted view as a second training
+            # example of the same video: the same two losses, averaged with the full
+            # view's so the task objective keeps its scale and stays comparable with a
+            # run that has the augmentation off.
+            if augment_task_loss:
+                keep = len_shift > 0
+                if bool(keep.any()):
+                    loss1 = 0.5 * (loss1 + CLAS2(
+                        logits1_shift[keep], text_labels[keep], len_shift[keep], device))
+                    loss2 = 0.5 * (loss2 + CLASM(
+                        logits2_shift[keep], text_labels[keep], len_shift[keep], device))
 
             loss3 = torch.zeros(1).to(device)
             text_feature_normal = text_features[0] / text_features[0].norm(dim=-1, keepdim=True)
@@ -378,6 +445,35 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
                     logits1_full, logits1_shift, logits2_full, logits2_shift,
                     len_full, offsets, args.consistency_branch, args.consistency_detach,
                 )
+
+            # Gradient-basis calibration has to happen here, before backward, because it
+            # needs both sides of the objective as live graph tensors. The loss basis
+            # keeps its original position further down: it averages over the first
+            # --lambda-auto-steps steps, which only exist once those steps are done.
+            #
+            # The first solve triggers on ``>=`` rather than ``==`` so that a step whose
+            # batch happens to leave the consistency term unusable is retried on the next
+            # one instead of silently leaving lambda at 0 for the whole run.
+            grad_basis = args.lambda_auto > 0 and args.lambda_auto_basis == "grad"
+            first_solve = grad_basis and lambda_base <= 0 and global_step >= args.lambda_auto_steps
+            resolve = (grad_basis and args.lambda_auto_recalibrate and lambda_base > 0
+                       and i == 0 and e > 0)
+            if first_solve or resolve:
+                task_grad = gradient_norm(loss1 + loss2 + loss3, model.parameters())
+                cons_grad = gradient_norm(loss4, model.parameters())
+                if cons_grad > 0:
+                    solved = args.lambda_auto * task_grad / cons_grad
+                    capped = cap_lambda_growth(solved, lambda_base,
+                                               args.lambda_auto_max_growth)
+                    note = "" if capped == solved else f" (capped from {solved:.6e})"
+                    print(f"[lambda-auto grad] epoch {e + 1} step {global_step}: "
+                          f"||grad task|| {task_grad:.6e} | ||grad consistency|| "
+                          f"{cons_grad:.6e} -> lambda = {capped:.6e}{note}", flush=True)
+                    lambda_base = capped
+                else:
+                    print(f"[lambda-auto grad] epoch {e + 1} step {global_step}: "
+                          f"consistency gradient is 0, lambda left at "
+                          f"{lambda_base:.6e}.", flush=True)
 
             lam = lambda_base * min(1.0, (e + 1) / max(1, args.consistency_warmup))
             loss = loss1 + loss2 + loss3 + lam * loss4
@@ -407,7 +503,8 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
             # lambda = r * L_task / L4. Measuring both sides on the same steps makes the
             # setting transfer across shift configurations, which an absolute lambda does
             # not: changing the cut changes L4's scale.
-            if args.lambda_auto > 0 and global_step == args.lambda_auto_steps:
+            if (args.lambda_auto > 0 and args.lambda_auto_basis == "loss"
+                    and global_step == args.lambda_auto_steps):
                 task_loss = (loss_total1 + loss_total2 + loss_total3) / (i + 1)
                 consistency_loss = loss_total4 / (i + 1)
                 if consistency_loss > 0:
@@ -432,9 +529,20 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
                 )
                 AUC, AP = test(model, testloader, args.visual_length, prompt_text, gt, gtsegments, gtlabels, device)
                 model.train()
-                log_evaluation(args, AUC, AP, e, global_step, lam, is_final=False)
+                log_evaluation(args, AUC, AP, e, global_step, lam, is_final=False,
+                               eval_kind="mid_epoch", test_metrics=test_metrics)
                 if args.select_metric != "none" and AUC > ap_best:
                     ap_best = float(AUC)  # float, not a numpy scalar, so the file stays plain
+                    best_selection = {
+                        "epoch": e + 1,
+                        "step": global_step,
+                        "auc_branch_c": float(AUC),
+                        "ap_branch_c": float(AP),
+                        "auc_branch_a": float(test_metrics.get("auc_branch_a", float("nan"))),
+                        "avg_map": float(test_metrics.get("avg_map", float("nan"))),
+                    }
+                    print(f"[select] new best AUC branch C {AUC:.6f} at epoch {e + 1} "
+                          f"step {global_step}", flush=True)
                     torch.save(
                         {
                             "epoch": e,
@@ -471,16 +579,14 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
         # loss that is being driven towards zero asks for an unbounded lambda, so this is
         # a feedback loop with no fixed point; the cap is what makes it a controller
         # instead of a divergence.
-        if (args.lambda_auto > 0 and args.lambda_auto_recalibrate
+        if (args.lambda_auto > 0 and args.lambda_auto_basis == "loss"
+                and args.lambda_auto_recalibrate
                 and lambda_base > 0 and e < args.max_epoch - 1):
             task_epoch = (loss_total1 + loss_total2 + loss_total3) / max(1, num_steps)
             cons_epoch = loss_total4 / max(1, num_steps)
             if cons_epoch > 0 and task_epoch > 0:
                 solved = args.lambda_auto * task_epoch / cons_epoch
-                capped = solved
-                if args.lambda_auto_max_growth > 0:
-                    capped = min(max(solved, lambda_base / args.lambda_auto_max_growth),
-                                 lambda_base * args.lambda_auto_max_growth)
+                capped = cap_lambda_growth(solved, lambda_base, args.lambda_auto_max_growth)
                 note = "" if capped == solved else f" (capped from {solved:.6e})"
                 print(f"[lambda-auto] end of epoch {e + 1}: realised share "
                       f"{lam * cons_epoch / task_epoch:.4f} vs target {args.lambda_auto} "
@@ -501,7 +607,8 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
         if testloader is not None and (args.metrics_csv or args.select_metric == "none"):
             AUC, AP = test(model, testloader, args.visual_length, prompt_text, gt, gtsegments, gtlabels, device)
             log_evaluation(args, AUC, AP, e, global_step, lam,
-                           is_final=(e == args.max_epoch - 1))
+                           is_final=(e == args.max_epoch - 1),
+                           eval_kind="epoch_end", test_metrics=test_metrics)
 
         # Same best-checkpoint reload as ucf_train.py, guarded for the case where no
         # evaluation has run yet (--eval-steps 0 or a very short schedule). Under
@@ -514,32 +621,71 @@ def train(model, normal_loader, anomaly_loader, testloader, args, label_map, dev
         checkpoint = load_checkpoint_dict(args.checkpoint_path, map_location=device)
         torch.save(checkpoint["model_state_dict"], args.output_model_path)
         print(f"Saved best-{args.select_metric} weights:", args.output_model_path)
+        # Say which of the ~120 mid-training evaluations these weights actually are, so
+        # the number quoted for this run cannot drift away from the file it names.
+        if best_selection:
+            print("[selected] run", args.run_tag or "(untagged)",
+                  "| epoch", best_selection["epoch"],
+                  "| step", best_selection["step"],
+                  "| AUC branch C", f"{best_selection['auc_branch_c'] * 100:.2f}",
+                  "| AP branch C", f"{best_selection['ap_branch_c'] * 100:.2f}",
+                  "| AUC branch A", f"{best_selection['auc_branch_a'] * 100:.2f}",
+                  "| avg mAP", f"{best_selection['avg_map']:.2f}")
     else:
         torch.save(model.state_dict(), args.output_model_path)
         print("Saved final-epoch weights:", args.output_model_path)
 
 
-def log_evaluation(args, auc, ap, epoch, global_step, lam, is_final):
-    """One row per evaluation, so a sweep is readable from a single CSV."""
+def log_evaluation(args, auc, ap, epoch, global_step, lam, is_final, eval_kind,
+                   test_metrics=None):
+    """One row per evaluation, so a sweep is readable from a single CSV.
+
+    Every metric column names the branch it came from. The old schema had one column
+    called ``auc``, which in this codebase can mean three unrelated things -- the C-branch
+    ROC-AUC on the 290 test videos, the A-branch one, or the shift-sensitivity AUC that
+    ``ucf_shift_sensitivity.py`` computes on a 266-video subset over the overlapping
+    region only. A reader of the CSV could not tell which, and the last of the three is
+    not comparable with the other two at all.
+
+    ``eval_kind`` separates the two cadences that used to be interleaved in one column:
+    ``mid_epoch`` rows are the ones the best-checkpoint rule looks at, ``epoch_end`` rows
+    are logging only.
+    """
     if not args.metrics_csv:
         return
-    append_metrics_csv(args.metrics_csv, {
+    row = {
         "run": args.run_tag,
         "epoch": epoch + 1,
         "step": global_step,
+        "eval_kind": eval_kind,
+        "is_final": int(is_final),
+        # --- what was measured, one column per branch ---
+        "auc_branch_c": round(float(auc), 6),
+        "ap_branch_c": round(float(ap), 6),
+        "auc_branch_a": "",
+        "ap_branch_a": "",
+        "avg_map": "",
+        # --- what produced it, so one row identifies its own run ---
+        "augment_task_loss": int(bool(args.augment_task_loss)),
         "lambda_consistency": args.lambda_consistency,
+        "lambda_auto": args.lambda_auto,
+        "lambda_auto_basis": args.lambda_auto_basis,
+        "lambda_auto_recalibrate": int(bool(args.lambda_auto_recalibrate)),
         "lambda_used": round(float(lam), 10),
         "shift_offset": args.shift_offset,
         "shift_ratio": args.shift_ratio,
         "shift_direction": args.shift_direction,
         "random_shift": int(bool(args.random_shift)),
+        "shift_ratio_warmup": args.shift_ratio_warmup,
         "detach": int(bool(args.consistency_detach)),
         "branch": args.consistency_branch,
+        "select_metric": args.select_metric,
         "seed": args.seed,
-        "is_final": int(is_final),
-        "auc": round(float(auc), 4),
-        "ap": round(float(ap), 4),
-    })
+    }
+    for key in ("auc_branch_a", "ap_branch_a", "avg_map"):
+        if test_metrics and key in test_metrics:
+            row[key] = round(float(test_metrics[key]), 6)
+    append_metrics_csv(args.metrics_csv, row)
 
 
 def setup_seed(seed, deterministic=False):

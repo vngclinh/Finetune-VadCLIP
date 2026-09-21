@@ -90,6 +90,20 @@ parser.add_argument(
          "the maximum. A fixed offset only constrains invariance at that one distance.",
 )
 parser.add_argument(
+    "--augment-task-loss",
+    default=False,
+    type=str2bool,
+    help="Compute the two MIL task losses on the shifted view as well and average them "
+         "with the full view's, which turns the shift into ordinary data augmentation. "
+         "Off -- the default and what every run so far used -- keeps L1 and L2 on the "
+         "full view only, so --lambda-consistency 0 is mathematically the original "
+         "VadCLIP and the shifted view exists purely to be compared against. The "
+         "augmentation and the consistency term are independent: either, both, or "
+         "neither. Items whose shifted view has no valid content left (a head shift "
+         "longer than the video) are dropped from the shifted half rather than trained "
+         "on an all-zero input that still carries an anomaly label.",
+)
+parser.add_argument(
     "--shift-ratio-warmup",
     default=0,
     type=int,
@@ -110,6 +124,19 @@ parser.add_argument(
 )
 parser.add_argument("--lambda-auto-steps", default=50, type=int,
                     help="Free steps before --lambda-auto solves for lambda.")
+parser.add_argument(
+    "--lambda-auto-basis",
+    default="loss",
+    choices=["loss", "grad"],
+    help="What --lambda-auto equalises. 'loss' (the default, and what round 2 ran) "
+         "matches loss VALUES: lambda = ratio * L_task / L_consistency. 'grad' matches "
+         "GRADIENT NORMS: lambda = ratio * ||dL_task/dtheta|| / ||dL_consistency/dtheta||, "
+         "measured with two extra autograd.grad calls on the calibration step. The "
+         "gradient is the thing the optimizer actually moves on, and the two ratios are "
+         "not interchangeable -- a term can be numerically tiny and still steer training, "
+         "or large and nearly flat. 'loss' is kept as the default so round-2 commands "
+         "reproduce exactly.",
+)
 parser.add_argument(
     "--lambda-auto-recalibrate",
     default=False,
