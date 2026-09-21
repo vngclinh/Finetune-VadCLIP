@@ -486,8 +486,42 @@ def test_skip_shifted_view_refuses_a_live_lambda(root, list_path):
     print("  ok: --skip-shifted-view refuses to run with a live consistency term")
 
 
+@contextlib.contextmanager
+def distinct_class_prompts():
+    """Give each class prompt its own token, so the 14 text features differ.
+
+    The shared CLIP stub returns the SAME token tensor for every prompt, so all 14 class
+    text features come out identical. logits2 cannot separate the classes either, because
+    the per-item visual term CLIPVAD adds to the text features is expanded along the class
+    axis and so is the same for every class. log_softmax is then uniform and CLASM is
+    pinned at log(14) whatever the visual input is -- which means loss2 physically cannot
+    react to the shifted view under the plain stub, and a test asserting that it does
+    would be testing the fixture, not the code.
+
+    Writing one distinct token into position 1 unpins it: encode_textprompt copies
+    positions 1..argmax-1 into the learnable prompt, and argmax stays at 5 because the EOT
+    id dwarfs anything written here.
+    """
+    import clip as clip_package
+
+    stub = clip_package.clip
+    original = stub.tokenize
+
+    def tokenize(texts, truncate=False):
+        tokens = original(texts, truncate)
+        for index in range(len(texts)):
+            tokens[index, 1] = index + 1
+        return tokens
+
+    stub.tokenize = tokenize
+    try:
+        yield
+    finally:
+        stub.tokenize = original
+
+
 def test_augment_task_loss_trains_on_the_shifted_view(root, list_path):
-    """--augment-task-loss must change the task loss, and only via the shifted view.
+    """--augment-task-loss must change the task losses, and only via the shifted view.
 
     Two runs on the same seed and the same batches: with the flag off the first step's
     loss1/loss2 come from the full view alone, with it on they are the average over both
@@ -504,7 +538,7 @@ def test_augment_task_loss_trains_on_the_shifted_view(root, list_path):
         model = build_model(args)
         normal_loader, anomaly_loader = build_loaders(args)
         buffer = io.StringIO()
-        with contextlib.redirect_stdout(buffer):
+        with contextlib.redirect_stdout(buffer), distinct_class_prompts():
             train(model, normal_loader, anomaly_loader, None, args, LABEL_MAP, "cpu")
         line = next(l for l in buffer.getvalue().splitlines() if l.startswith("[step 0]"))
         seen[tag] = {
@@ -514,15 +548,15 @@ def test_augment_task_loss_trains_on_the_shifted_view(root, list_path):
 
     capture("plain", False)
     capture("augmented", True)
-    assert seen["plain"]["loss1"] != seen["augmented"]["loss1"], (
-        "--augment-task-loss left loss1 untouched, so the shifted view never entered it"
-    )
-    assert seen["plain"]["loss2"] != seen["augmented"]["loss2"], (
-        "--augment-task-loss left loss2 untouched"
-    )
+    for name in ("loss1", "loss2"):
+        assert seen["plain"][name] != seen["augmented"][name], (
+            f"--augment-task-loss left {name} untouched "
+            f"({seen['plain'][name]} in both), so the shifted view never entered it"
+        )
     # loss3 is text-only: the shifted view cannot reach it, so it must not move.
     assert abs(seen["plain"]["loss3"] - seen["augmented"]["loss3"]) < 1e-9, (
-        "loss3 depends only on the text prompts and must be unaffected by the augmentation"
+        f"loss3 depends only on the text prompts and must be unaffected by the "
+        f"augmentation, but moved {seen['plain']['loss3']} -> {seen['augmented']['loss3']}"
     )
 
     args = build_args(root, list_path, augment_task_loss=True, skip_shifted_view=True)
