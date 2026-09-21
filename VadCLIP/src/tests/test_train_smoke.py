@@ -512,7 +512,7 @@ def recording_task_losses():
             calls[name].append({
                 "batch": int(logits.shape[0]),
                 "lengths": [int(x) for x in lengths],
-                "value": float(value),
+                "value": float(value.detach()),  # detach: reading it must not hold a graph
             })
             return value
 
@@ -583,13 +583,23 @@ def test_augment_task_loss_trains_on_the_shifted_view(root, list_path):
         "loss3 depends only on the text prompts and must be unaffected by the augmentation"
     )
 
-    args = build_args(root, list_path, augment_task_loss=True, skip_shifted_view=True)
-    refused = False
+    # lambda_consistency has to be zeroed here. It defaults to 0.01, and with the shifted
+    # view skipped that trips the *other* guard first -- the one about a live consistency
+    # term -- so the run would refuse for a reason that has nothing to do with the flag
+    # under test. test_skip_shifted_view_refuses_a_live_lambda already covers that one.
+    args = build_args(root, list_path, augment_task_loss=True, skip_shifted_view=True,
+                      lambda_consistency=0.0, lambda_auto=0.0)
+    refused = None
     try:
         train(build_model(args), *build_loaders(args), None, args, LABEL_MAP, "cpu")
     except ValueError as error:
-        refused = "--augment-task-loss" in str(error)
-    assert refused, "--augment-task-loss with --skip-shifted-view should refuse"
+        refused = str(error)
+    assert refused is not None, (
+        "--augment-task-loss with --skip-shifted-view ran instead of refusing"
+    )
+    assert "--augment-task-loss" in refused, (
+        f"it refused, but for the wrong reason: {refused}"
+    )
     print("  ok: --augment-task-loss runs both task losses over both views "
           "(lengths shifted by the offset, loss is their mean), and refuses the "
           "single-view shortcut")
